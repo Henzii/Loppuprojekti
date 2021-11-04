@@ -1,26 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Container, Typography } from '@mui/material';
+import { useQuery } from '@apollo/client';
+import CreateAccount from './components/CreateAccount';
+import LoginForm from './components/LoginForm';
+import { GET_ME } from './graphql/mutations';
 
 function App() {
+  useQuery(GET_ME);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Typography variant="h4">Herou</Typography>
+      <CreateAccount />
+      <LoginForm />
+    </Container>
   );
 }
 

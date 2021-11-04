@@ -2,6 +2,7 @@ import { UserInputError } from 'apollo-server-errors';
 import mysql from 'mysql2/promise'
 import { makeConnection } from '../utils/mySqlHelpers';
 import { User } from '../types';
+import log from './logService';
 
 const getAllUsers = async (): Promise<User[] | []> => {
 
@@ -37,6 +38,7 @@ const addUser = async (name: string, email: string | undefined, password: string
         , [[name, email, password, 'user']]) as unknown[];
         return rows as mysql.ResultSetHeader
     } catch(e) {
+        log('UserService', null, `Tunnuksen ${name} luonti epäonnistui.`)
         throw new UserInputError(`Tunnus on jo käytössä`);
     } finally {
         con.end();

@@ -1,10 +1,11 @@
 import userService from '../services/userService';
-import { MutationAddGameArgs, MutationAddUserArgs, MutationLoginArgs, SafeUser, User } from '../types';
+import { DecodedToken, MutationAddGameArgs, MutationAddUserArgs, MutationLoginArgs, SafeUser, User } from '../types';
 import bcrypt from 'bcrypt';
 import { validString } from '../utils/validators';
-import { UserInputError, ApolloError } from 'apollo-server-errors';
+import { UserInputError, ApolloError, AuthenticationError } from 'apollo-server-errors';
 import jwt from 'jsonwebtoken';
 import gameService from '../services/gameService';
+import { logProcess, readLogs } from '../services/logService';
 
 const resolvers = {
     Query: {
@@ -16,6 +17,20 @@ const resolvers = {
             const res = await userService.getUser(
                 (args.id) ? args.id : args.name
             );
+            return res;
+        },
+        getMe: async () => {
+            console.log('Getmee...');
+            return "me";
+        },
+        getLogs: async (_root: unknown, args: { process: logProcess}, context: { user: DecodedToken } ) => {
+            const prosessi = (args.process) ? args.process : '';
+
+            // Kirjautuneille CsvParserin logit, adminille kaikki
+            if (!context.user || (prosessi !== 'CsvParser' && context.user.rooli !== 'admin')) {
+                throw new AuthenticationError('Ei oikeuksia!')
+            }
+            const res = await readLogs(prosessi);
             return res;
         }
     },
@@ -46,7 +61,8 @@ const resolvers = {
                 else {
                     const payload = {
                         id: user.id,
-                        name: user.name
+                        name: user.name,
+                        rooli: user.rooli,
                     }
                     if (!validString(process.env.TOKEN_KEY)) throw new ApolloError('Avaimet hukassa')
                     const token = jwt.sign(payload, process.env.TOKEN_KEY) as JsonWebKey;

@@ -22,3 +22,10 @@ export type MutationAddUserArgs = {
 export type MutationAddGameArgs = {
     game: Game
 }
+
+export type DecodedToken = {
+    name: string,
+    id: number,
+    rooli: string,
+    iat: number
+}

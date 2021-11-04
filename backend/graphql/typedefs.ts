@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
     type Alias {
@@ -12,6 +12,12 @@ const typeDefs = gql`
         email: String
         rooli: String!
         active: Boolean!
+    }
+    type LogEntry {
+        date: String!
+        process: String!
+        name: String
+        message: String!
     }
     input Game {
         course: String!
@@ -28,6 +34,8 @@ const typeDefs = gql`
     type Query {
         getUsers: [User]!
         getUser(id: Int, name: String): User
+        getMe: String!
+        getLogs(process: String): [LogEntry]!
     }
 
     type Mutation {

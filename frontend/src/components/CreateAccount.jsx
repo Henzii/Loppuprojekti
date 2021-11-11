@@ -3,11 +3,12 @@ import {
 } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import React, { useState } from 'react';
+import { useSnackbar } from 'notistack';
 import { CREATE_USER } from '../graphql/mutations';
 
 function CreateAccount() {
   const [createUser, createUserData] = useMutation(CREATE_USER);
-
+  const { enqueueSnackbar } = useSnackbar();
   const [tunnukset, setTunnukset] = useState({
     tunnus: '',
     password: '',
@@ -31,8 +32,9 @@ function CreateAccount() {
           email: tunnukset.email,
         },
       });
+      enqueueSnackbar('Tunnus luotiin onnistuneesti!', { variant: 'success' });
     } catch (error) {
-      // Ehkä loggaa joskus...
+      enqueueSnackbar('Virhe tunnuksen luomisessa!', { variant: 'error' });
     }
   };
 
@@ -58,16 +60,15 @@ function CreateAccount() {
       {
         (createUserData.error
           && (
-          <div className="div-error">
-            Virhe tunnuksen luomisessa! (
-            {createUserData.error.message}
-            )
-          </div>
+            <div className="div-error">
+              Virhe tunnuksen luomisessa! (
+              {createUserData.error.message}
+              )
+            </div>
           )
         )
       }
       <form onSubmit={handleCreation}>
-        <Typography variant="h5">Luo tunnus</Typography>
         <Grid container spacing={1} alignItems="center" columns={5}>
           <Grid item xs={1}>Tunnus:</Grid>
           <Grid item xs={4}><TextField name="tunnus" required onChange={handleFieldChange} /></Grid>
@@ -76,7 +77,7 @@ function CreateAccount() {
           <Grid item xs={1}>Vahvista salasana:</Grid>
           <Grid item xs={4}><TextField name="password2" required type="password" onChange={handleFieldChange} /></Grid>
           <Grid item xs={1}>Email:</Grid>
-          <Grid item xs={4}><TextField name="email" placeholder="Ei pakko" onChange={handleFieldChange} /></Grid>
+          <Grid item xs={4}><TextField name="email" placeholder="Iimeil" onChange={handleFieldChange} /></Grid>
           <Grid item xs={5}>
             <Button size="large" variant="contained" disabled={!tunnukset.valid} type="submit">
               Luo tunnukset

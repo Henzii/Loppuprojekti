@@ -1,11 +1,14 @@
 import React from 'react';
-import { TextField } from '@mui/material';
+import { Grid, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { useMutation } from '@apollo/client';
-import { LOGIN } from '../graphql/mutations';
+import { useSnackbar } from 'notistack';
+import { useApolloClient, useMutation } from '@apollo/client';
+import { GET_ME, LOGIN } from '../graphql/mutations';
 
 function LoginForm() {
   const [loginUser, { loading }] = useMutation(LOGIN);
+  const { enqueueSnackbar } = useSnackbar();
+  const client = useApolloClient();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,23 +21,35 @@ function LoginForm() {
           },
         },
       );
-      console.log('Login res: ', res.data.login);
       document.cookie = `suklaaKeksi=${res.data.login}`;
+      await client.refetchQueries({
+        include: [GET_ME],
+      });
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar('Väärä tunnus tai salasana!', { variant: 'error' });
+    } finally {
       e.target.tunnus.value = '';
       e.target.password.value = '';
-    } catch (error) {
-      console.log(`VIrhe sisäänkirjautumisessa (${error.message})`);
     }
   };
 
   return (
-    <>
+    <div style={{ margin: '8px 0px' }}>
       <form onSubmit={handleLogin}>
-        <TextField name="tunnus" placeholder="Tunnus..." />
-        <TextField name="password" type="password" variant="outlined" placeholder="Salasana..." />
-        <LoadingButton loading={loading} type="submit"> Kirjaudu</LoadingButton>
+        <Grid container columns={1} spacing={1}>
+          <Grid item xs={1}>
+            <TextField name="tunnus" placeholder="Tunnus..." />
+          </Grid>
+          <Grid item xs={1}>
+            <TextField name="password" type="password" variant="outlined" placeholder="Salasana..." />
+          </Grid>
+          <Grid item xs={1}>
+            <LoadingButton loading={loading} type="submit" variant="contained" size="large"> Kirjaudu</LoadingButton>
+          </Grid>
+        </Grid>
       </form>
-    </>
+    </div>
   );
 }
 export default LoginForm;

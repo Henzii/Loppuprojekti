@@ -14,9 +14,57 @@ mutation($name: String!, $password: String!) {
   
 }
 `;
+export const ADD_ALIAS = gql`
+mutation ($alias: String!) {
+  addAlias(alias: $alias)
+}
+`;
+export const DELETE_ALIAS = gql`
+mutation ($aliasId: Int!) {
+  deleteAlias(aliasId: $aliasId)
+}
+`;
+export const GET_LOGS = gql`
+  query {
+    getLogs {
+      date
+      process
+      type
+      message
+    }
+  }
+`;
 
 export const GET_ME = gql`
 query {
-  getMe
+  getMe {
+    id
+    name
+    rooli
+  }
+}
+`;
+
+export const GET_SIMPLE_COURSE_STATS = gql`
+query {
+  getCourseStats {
+    rata
+    layout
+    par
+    min
+    max
+    avg
+    games
+    tenLatestRounds
+    hc
+  }
+}
+`;
+export const GET_ALIASES = gql`
+query {
+  getAliases {
+    id
+    alias
+  }
 }
 `;

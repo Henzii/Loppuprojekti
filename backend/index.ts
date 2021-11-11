@@ -13,7 +13,7 @@ dotenv.config();
 
 const corsOptions = {
     credentials: true,
-  //  origin: 'http://localhost:3000'
+    origin: 'http://localhost:3000'
 };
 
 app.use(cors(corsOptions));
@@ -25,9 +25,8 @@ const server = new ApolloServer({
             const [avain, token] = req.headers.cookie.split('=');
             if (avain === "suklaaKeksi") {
                 if (jwt.verify(token, process.env.TOKEN_KEY as string)) {
-                    const decodedUser = jwt.decode(token) as DecodedToken;
-                    req.user = decodedUser;
-                    console.log(decodedUser);
+                    const user = jwt.decode(token) as DecodedToken;
+                    return { user };
                 }
             }
         }

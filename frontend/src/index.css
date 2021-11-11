@@ -1,33 +1,37 @@
-body {
-  margin: 0;
+* {
   font-family: Quicksand, Arial, Helvetica, sans-serif;
 }
-
-.container {
-  padding: 50px 100px;
+body {
+  margin: 0;
 }
-.input-textfield {
-  border-radius: 8px;
-  padding: 5px;
-  font-family: Quicksand, Arial, sans-serif;
-  font-size: 1.5vw;
-  border: 1px solid darkgray;
+.lokikirja :nth-child(3) {
+  background-color: skyblue;
 }
-.input-password {
-  letter-spacing: 3px;
+.stats-row td {
+  font-family: Quicksand;
+  font-weight: 400;
+  font-size: 3vw;
 }
-.input-button {
-  padding: 5px 15px;
+h1, h2, h3, h4, h5, h6 {
+  font-family: Quicksand, Roboto, Arial;
 }
-.input-button:hover, .input-button:focus {
-  background-color: lightgreen;
-  border-color: green;
-  transition: 5s;
+.navilinkki {
+  text-decoration: none;
+  color: inherit;
+  font-family: Quicksand;
+  font-size: 2vw;
+  padding: 0px 20px;
+}
+.navilinkki:hover {
+  color: lightseagreen;
+  transition: 3s;
 }
 .div-error {
   color: red;
   font-weight: bold;
   animation: errori 1s infinite ease-in-out;
+  padding: 20px;
+
 }
 @keyframes errori {
   0% { 

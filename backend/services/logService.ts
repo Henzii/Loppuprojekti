@@ -1,8 +1,8 @@
 import { makeConnection } from "../utils/mySqlHelpers";
 
-const writeLog = (process: logProcess, name: logName, message: string): void => {
+const writeLog = (process: logProcess, type: logType, message: string): void => {
     makeConnection().then(con => {
-        con.query('INSERT into logs (process, name, message) VALUES (?)', [[process, name, message]])
+        con.query('INSERT into logs (process, type, message) VALUES (?)', [[process, type, message]])
             .catch(e => console.log('Virhe lokin kirjoittamisessa', e.message))
     }).catch(e => console.log('Loki ei saa yhteyttä databaseen', e.message));
 }
@@ -16,11 +16,11 @@ export const readLogs = async (process: logProcess | ''): Promise<SingleLogEntry
 export default writeLog;
 
 export type logProcess = 'MySQL' | 'UserService' | 'LoginService' | 'GameService' | 'CsvParser';
-export type logName = string | undefined | null
+export type logType = 'error' | 'success' | 'warning' | 'info'
 
 interface SingleLogEntry {
     date: Date,
     process: logProcess,
-    name: logName,
+    type: logType,
     message: string
 }

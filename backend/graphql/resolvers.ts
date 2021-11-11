@@ -6,6 +6,8 @@ import { UserInputError, ApolloError, AuthenticationError } from 'apollo-server-
 import jwt from 'jsonwebtoken';
 import gameService from '../services/gameService';
 import { logProcess, readLogs } from '../services/logService';
+import statsService from '../services/statsService';
+import { median } from '../utils/mathAndShit';
 
 const resolvers = {
     Query: {
@@ -19,11 +21,11 @@ const resolvers = {
             );
             return res;
         },
-        getMe: async () => {
-            console.log('Getmee...');
-            return "me";
+        getMe: async (_root: unknown, _args: unknown, context: { user: DecodedToken }) => {
+            if (!context.user) return null;
+            return context.user;
         },
-        getLogs: async (_root: unknown, args: { process: logProcess}, context: { user: DecodedToken } ) => {
+        getLogs: async (_root: unknown, args: { process: logProcess }, context: { user: DecodedToken }) => {
             const prosessi = (args.process) ? args.process : '';
 
             // Kirjautuneille CsvParserin logit, adminille kaikki
@@ -31,6 +33,18 @@ const resolvers = {
                 throw new AuthenticationError('Ei oikeuksia!')
             }
             const res = await readLogs(prosessi);
+            return res;
+        },
+        getCourseStats: async (_root: unknown, _args: undefined, context: { user: DecodedToken }) => {
+            if (!context.user) throw new AuthenticationError('Access denied');
+            const res = await statsService.getSimpleCourseStats(context.user.id);
+            return res;
+        },
+        getAliases: async (_root: unknown, args: { userId: number }, context: { user: DecodedToken }) => {
+            if (!context.user || (args.userId !== context.user.id && context.user.rooli !== 'admin')) {
+                throw new AuthenticationError('Access denied');
+            }
+            const res = await userService.getAliases((args.userId || context.user.id));
             return res;
         }
     },
@@ -57,7 +71,7 @@ const resolvers = {
                 throw new UserInputError('Väärä tunnus tai salasana')
             } else {
                 const user = await userService.getUser(name);
-                if (!user|| !(await bcrypt.compare(password, user.passwordHash)) ) throw new UserInputError('Väärä tunnus tai salasana');
+                if (!user || !(await bcrypt.compare(password, user.passwordHash))) throw new UserInputError('Väärä tunnus tai salasana');
                 else {
                     const payload = {
                         id: user.id,
@@ -70,13 +84,50 @@ const resolvers = {
                 }
             }
         },
-        addGame: async(_root: unknown, args: MutationAddGameArgs) => {
+        addGame: async (_root: unknown, args: MutationAddGameArgs) => {
             try {
                 return gameService.addGame(args.game);
             } catch (e) {
                 throw new Error('Peliä ei voitu lisätä!')
             }
+        },
+        addAlias: async (_root: unknown, args: { alias: string, userId: number }, context: { user: DecodedToken }) => {
+            if (args.userId && context.user.rooli !== 'admin') throw new AuthenticationError('Access denied');
+            if (!args.alias) throw new UserInputError('What alias?');
+            const userId = args.userId || context.user.id;
+            try {
+                return userService.addAlias(userId, args.alias);
+            } catch (e) {
+                throw new UserInputError('Aliasta ei voitu lisätä :P');
+            }
+        },
+        deleteAlias: async (_root: unknown, args: { aliasId: number }, context: { user: DecodedToken }) => {
+            if (!context?.user?.id) throw new AuthenticationError('Access denied');
+            let userId: number | undefined = context.user.id;
+            
+            if (context.user.rooli === 'admin') userId = undefined;
+
+            const poistetut = await userService.deleteAlias(args.aliasId, userId);
+            if (poistetut > 0)
+                return true;
+            return false;
         }
-    }
+    },
+    SimpleCourseStats: {
+        tenLatestRounds: (root: StatsRootArgs) => {
+            const kierrokset = root.tenLatestRounds.split(',').map(Number);
+            root.tenLatestMedian = median(kierrokset);
+            root.hc = root.tenLatestMedian - root.par;
+            return kierrokset;
+        },
+    },
 }
+
+interface StatsRootArgs {
+    tenLatestRounds: string,
+    tenLatestMedian: number,
+    hc: number,
+    par: number
+}
+
 export default resolvers;

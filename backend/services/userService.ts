@@ -3,6 +3,7 @@ import mysql from 'mysql2/promise'
 import { makeConnection } from '../utils/mySqlHelpers';
 import { User } from '../types';
 import log from './logService';
+import { MysqlError } from 'mysql';
 
 const getAllUsers = async (): Promise<User[] | []> => {
 
@@ -36,14 +37,51 @@ const addUser = async (name: string, email: string | undefined, password: string
     try {
         const [rows] = await con.query(`INSERT INTO user (name, email, passwordHash, rooli) VALUES (?)`
         , [[name, email, password, 'user']]) as unknown[];
+        log('UserService', 'success', `Tunnus ${name} luotiin onnistuneesti`);
         return rows as mysql.ResultSetHeader
     } catch(e) {
-        log('UserService', null, `Tunnuksen ${name} luonti epäonnistui.`)
+        log('UserService', 'error', `Tunnuksen ${name} luonti epäonnistui. Error: ${e}`)
         throw new UserInputError(`Tunnus on jo käytössä`);
     } finally {
         con.end();
     }
 }
 
-
-export default { getAllUsers, addUser, getUser }
+const getAliases = async(userId: number) => {
+    const con = await makeConnection();
+    try {
+        const [rows] = await con.query('SELECT id, alias from alias WHERE user = ?', userId);
+        return rows;
+    } catch (e) {
+        log('UserService', 'error', `Ei voitu hakea aliakseia käyttäjälle ${userId}`);
+    } finally {
+        con.end();
+    }
+}
+const addAlias = async(userId: number, alias: string) => {
+    const con = await makeConnection();
+    try {
+        const [result] = await con.query('INSERT INTO alias (user, alias) VALUES (?,?)', [userId, alias]) as mysql.ResultSetHeader[];
+        return result.insertId;
+    } catch (e) {
+        log('UserService', 'error', `Aliasta ei voitu lisätä (${userId}, ${alias}). Error: ${e}`);
+        if ( (e as MysqlError).code === 'ER_DUP_ENTRY' )
+            throw new UserInputError('Alias on jo olemassa')
+        throw new Error('Mystinen virhe');
+    } finally {
+        con.end();
+    }
+}
+const deleteAlias = async(aliasId: number, userId: number | undefined) => {
+    const con = await makeConnection();
+    try {
+        const [res] = await con.query(`DELETE from alias WHERE id = ? ${(userId) ? 'AND user = ?' : ''}`, [ aliasId, userId ]) as mysql.ResultSetHeader[];
+        return res.affectedRows;
+    } catch (e) {
+        log('UserService', 'error', `Aliasta ei voitu poistaa (id: ${aliasId}), ${e}`);
+        throw Error('Aliasta ei voitu poistaa :P');
+    } finally {
+        con.end();
+    }
+}
+export default { getAllUsers, addUser, getUser, getAliases, addAlias, deleteAlias }

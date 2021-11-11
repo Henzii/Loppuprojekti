@@ -9,15 +9,31 @@ const typeDefs = gql`
     type User {
         id: ID!
         name: String!
-        email: String
         rooli: String!
-        active: Boolean!
+    }
+    type Alias {
+        id: ID!
+        alias: String!
     }
     type LogEntry {
         date: String!
         process: String!
-        name: String
+        type: String!
         message: String!
+    }
+    type SimpleCourseStats {
+        nimi: String
+        rata: String
+        layout: String
+        par: Int
+        latest: Int
+        min: Float
+        max: Float
+        avg: Float
+        games: Int
+        tenLatestRounds: [Int]
+        tenLatestMedian: Float
+        hc: Float
     }
     input Game {
         course: String!
@@ -34,8 +50,11 @@ const typeDefs = gql`
     type Query {
         getUsers: [User]!
         getUser(id: Int, name: String): User
-        getMe: String!
+        getMe: User
         getLogs(process: String): [LogEntry]!
+
+        getCourseStats: [SimpleCourseStats]
+        getAliases( userId: ID): [Alias]!
     }
 
     type Mutation {
@@ -43,6 +62,8 @@ const typeDefs = gql`
         login(name: String! password: String!): String
 
         addGame(game: Game!): Int
+        addAlias(userId: ID, alias: String!): Int
+        deleteAlias(aliasId: Int!): Boolean
     }
 `;
 

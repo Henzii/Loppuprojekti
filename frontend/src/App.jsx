@@ -1,18 +1,27 @@
 import React from 'react';
-import { Container, Typography } from '@mui/material';
-import { useQuery } from '@apollo/client';
-import CreateAccount from './components/CreateAccount';
-import LoginForm from './components/LoginForm';
-import { GET_ME } from './graphql/mutations';
+import { Routes, Route } from 'react-router-dom';
+// import useMe from './hooks/useMe';
+import Frontpage from './components/Frontpage';
+import ReadLogs from './components/ReadLogs';
+import AppBar from './components/AppBar';
+import LoggedUserProvider from './components/LoggedUserProvider';
+import MyStats from './components/MyStats';
+import UploadCsv from './components/UploadCsv';
+import Settings from './components/Settings';
 
 function App() {
-  useQuery(GET_ME);
+  //  const { loggedIn } = useMe();
   return (
-    <Container>
-      <Typography variant="h4">Herou</Typography>
-      <CreateAccount />
-      <LoginForm />
-    </Container>
+    <LoggedUserProvider>
+      <AppBar />
+      <Routes>
+        <Route path="/logs" element={<ReadLogs />} />
+        <Route path="/" element={<Frontpage />} />
+        <Route path="/stats" element={<MyStats />} />
+        <Route path="/upload" element={<UploadCsv />} />
+        <Route path="/settings" element={<Settings />} />
+      </Routes>
+    </LoggedUserProvider>
   );
 }
 

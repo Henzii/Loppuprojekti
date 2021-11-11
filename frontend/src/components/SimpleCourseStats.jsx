@@ -1,0 +1,91 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import {
+  Card, CardContent, CardHeader, Collapse, IconButton, Table, TableBody,
+  TableCell, TableContainer, TableHead, TableRow, Container,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { makeStyles } from '@mui/styles';
+
+const colorMaker = (par, score) => {
+  const diff = score - par;
+  if (diff > 3) return 'red';
+  if (diff <= 0) return 'green';
+  return 'orange';
+};
+const useStyles = makeStyles({
+  latest: {
+    color: ({ par, latest }) => colorMaker(par, latest),
+  },
+  best: {
+    color: ({ par, best }) => colorMaker(par, best),
+  },
+});
+
+const SimpleCourseStats = ({ data }) => {
+  const tyylit = useStyles({ par: data.par, latest: data.latest, best: data.min });
+  const [showMore, setShowMore] = useState(false);
+
+  return (
+    <Card style={{ marginBottom: '10px' }}>
+      <CardHeader
+        title={data.rata}
+        subheader={data.layout}
+        action={
+          (
+            <IconButton onClick={() => setShowMore(!showMore)}>
+              <ExpandMoreIcon />
+            </IconButton>
+          )
+        }
+      />
+      <CardContent>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Radan par</TableCell>
+                <TableCell>Pelattuja pelejä</TableCell>
+                <TableCell>KA</TableCell>
+                <TableCell>Paras</TableCell>
+                <TableCell>HC</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className="stats-row">
+              <TableRow>
+                <TableCell>{data.par}</TableCell>
+                <TableCell>{data.games}</TableCell>
+                <TableCell>{Math.round(data.avg * 10) / 10}</TableCell>
+                <TableCell className={tyylit.best}>
+                  {data.min}
+                  <span style={{ fontSize: 'smaller' }}>
+                    (
+                    {data.min - data.par}
+                    )
+                  </span>
+                </TableCell>
+                <TableCell>
+                  {data.hc}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Collapse in={showMore} mountOnEnter={false}>
+          <h3>10 viimeisintä kierrosta</h3>
+          <Container sx={{ fontSize: { xs: '0.8em', md: '1.5vw' } }}>
+            {data.tenLatestRounds.map((r, i) => {
+              const key = `${data.rata}${data.layout}${i}`;
+              return (<span key={key} style={{ marginRight: '5%' }}>{r}</span>);
+            })}
+          </Container>
+        </Collapse>
+      </CardContent>
+    </Card>
+  );
+};
+SimpleCourseStats.propTypes = {
+  data: PropTypes.shape().isRequired,
+};
+
+export default SimpleCourseStats;

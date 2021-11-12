@@ -7,10 +7,14 @@ body {
 .lokikirja :nth-child(3) {
   background-color: skyblue;
 }
-.stats-row td {
+.stats-table td {
   font-family: Quicksand;
   font-weight: 400;
   font-size: 3vw;
+  text-align: center;
+}
+.stats-table th {
+  text-align: center;
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: Quicksand, Roboto, Arial;
@@ -42,5 +46,11 @@ h1, h2, h3, h4, h5, h6 {
   }
   100% {
     color: red;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .stats-table th {
+    font-size: 1vw;
   }
 }

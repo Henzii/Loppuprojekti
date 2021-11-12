@@ -1,20 +1,25 @@
 import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
+
+    scalar Upload
+
     type Alias {
         id: ID!
         alias: String
         user: Int
+    }
+    type File {
+        filename: String!
+        mimetype: String!
+        encoding: String!
     }
     type User {
         id: ID!
         name: String!
         rooli: String!
     }
-    type Alias {
-        id: ID!
-        alias: String!
-    }
+ 
     type LogEntry {
         date: String!
         process: String!
@@ -55,8 +60,19 @@ const typeDefs = gql`
 
         getCourseStats: [SimpleCourseStats]
         getAliases( userId: ID): [Alias]!
-    }
 
+        getCompetitions: [Competition]
+    }
+    type Competition {
+        game: Int
+        paivays: String
+        name: String
+        layout: String
+        par: Int
+        playerName: String
+        total: Int
+        hc: Float
+    }
     type Mutation {
         addUser(name: String! email: String password: String!): User
         login(name: String! password: String!): String
@@ -64,6 +80,8 @@ const typeDefs = gql`
         addGame(game: Game!): Int
         addAlias(userId: ID, alias: String!): Int
         deleteAlias(aliasId: Int!): Boolean
+
+        uploadCsvFile(file: Upload!): File!
     }
 `;
 

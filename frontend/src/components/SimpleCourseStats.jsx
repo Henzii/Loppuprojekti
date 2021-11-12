@@ -9,9 +9,13 @@ import { makeStyles } from '@mui/styles';
 
 const colorMaker = (par, score) => {
   const diff = score - par;
-  if (diff > 3) return 'red';
+  if (diff > 5) return 'red';
   if (diff <= 0) return 'green';
   return 'orange';
+};
+const addPlus = (number) => {
+  if (number >= 0) return `+${number}`;
+  return number;
 };
 const useStyles = makeStyles({
   latest: {
@@ -20,10 +24,15 @@ const useStyles = makeStyles({
   best: {
     color: ({ par, best }) => colorMaker(par, best),
   },
+  avg: {
+    color: ({ par, avg }) => colorMaker(par, avg),
+  },
 });
 
 const SimpleCourseStats = ({ data }) => {
-  const tyylit = useStyles({ par: data.par, latest: data.latest, best: data.min });
+  const tyylit = useStyles({
+    par: data.par, latest: data.latest, best: data.min, avg: data.avg,
+  });
   const [showMore, setShowMore] = useState(false);
 
   return (
@@ -34,14 +43,14 @@ const SimpleCourseStats = ({ data }) => {
         action={
           (
             <IconButton onClick={() => setShowMore(!showMore)}>
-              <ExpandMoreIcon />
+              <ExpandMoreIcon fontSize="large" />
             </IconButton>
           )
         }
       />
       <CardContent>
         <TableContainer>
-          <Table>
+          <Table className="stats-table">
             <TableHead>
               <TableRow>
                 <TableCell>Radan par</TableCell>
@@ -51,18 +60,17 @@ const SimpleCourseStats = ({ data }) => {
                 <TableCell>HC</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody className="stats-row">
+            <TableBody>
               <TableRow>
                 <TableCell>{data.par}</TableCell>
                 <TableCell>{data.games}</TableCell>
-                <TableCell>{Math.round(data.avg * 10) / 10}</TableCell>
+                <TableCell className={tyylit.avg}>
+                  {
+                    addPlus(Math.round((data.avg - data.par) * 10) / 10)
+                  }
+                </TableCell>
                 <TableCell className={tyylit.best}>
-                  {data.min}
-                  <span style={{ fontSize: 'smaller' }}>
-                    (
-                    {data.min - data.par}
-                    )
-                  </span>
+                  {addPlus(data.min - data.par)}
                 </TableCell>
                 <TableCell>
                   {data.hc}
@@ -76,7 +84,7 @@ const SimpleCourseStats = ({ data }) => {
           <Container sx={{ fontSize: { xs: '0.8em', md: '1.5vw' } }}>
             {data.tenLatestRounds.map((r, i) => {
               const key = `${data.rata}${data.layout}${i}`;
-              return (<span key={key} style={{ marginRight: '5%' }}>{r}</span>);
+              return (<span key={key} style={{ marginRight: '5%' }}>{r - data.par}</span>);
             })}
           </Container>
         </Collapse>

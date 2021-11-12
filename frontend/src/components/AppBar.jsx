@@ -5,6 +5,7 @@ import {
 
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBarLink from './AppBarLink';
+import HideIfNotLogged from './HideIfNotLogged';
 
 const AppBar = () => (
   <MuiAppBar position="static">
@@ -19,10 +20,13 @@ const AppBar = () => (
       </Box>
       <Box sx={{ display: { xs: 'none', md: 'inline' } }}>
         <AppBarLink to="/" text="Etusivu" />
-        <AppBarLink to="/stats" text="Stats" />
-        <AppBarLink to="/settings" text="Settings" />
-        <AppBarLink to="/upload" text="Upload" />
-        <AppBarLink to="/logs" text="Logs" />
+        <AppBarLink to="/competitions" text="Kisat" />
+        <HideIfNotLogged>
+          <AppBarLink to="/stats" text="Stats" />
+          <AppBarLink to="/settings" text="Settings" />
+          <AppBarLink to="/upload" text="Upload" />
+          <AppBarLink to="/logs" text="Logs" />
+        </HideIfNotLogged>
       </Box>
     </Toolbar>
   </MuiAppBar>

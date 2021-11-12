@@ -1,5 +1,15 @@
 import { gql } from '@apollo/client';
 
+export const UPLOAD_CSV = gql`
+  mutation($file: Upload!) {
+    uploadCsvFile(file: $file) {
+      filename
+      mimetype
+      encoding
+    }
+  }
+`;
+
 export const CREATE_USER = gql`
   mutation($name: String!, $password: String!, $email: String) {
     addUser(name: $name, password: $password, email: $email) {

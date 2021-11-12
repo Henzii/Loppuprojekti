@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import { useQuery } from '@apollo/client';
 import {
   Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography,
@@ -31,7 +32,7 @@ const ReadLogs = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {logit.map((l) => <SingleLogEntry key={l.date} log={l} />)}
+            {logit.map((l, i) => <SingleLogEntry key={l.date + i} log={l} />)}
           </TableBody>
         </Table>
       </TableContainer>

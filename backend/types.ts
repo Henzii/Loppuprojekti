@@ -29,3 +29,21 @@ export type DecodedToken = {
     rooli: string,
     iat: number
 }
+
+export type RawCompetitionData = {
+    game: number,
+    paivays: Date,
+    name: string,
+    layout: string,
+    playerName: string,
+    total: number
+    tenLatestRounds: string,
+}
+export type GoodCompetitionData = {
+    course: {
+        name: string,
+        layout: string,
+    },
+    date: Date,
+    players: number
+}

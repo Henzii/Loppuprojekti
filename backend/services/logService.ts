@@ -9,7 +9,6 @@ const writeLog = (process: logProcess, type: logType, message: string): void => 
 export const readLogs = async (process: logProcess | ''): Promise<SingleLogEntry[] | []> => {
     const con = await makeConnection();
     const [rows] = await con.query(`SELECT * from logs ${(process !== '' ? 'where process = ?' : '')}`, process) as unknown[];
-    console.log(rows);
     return rows as SingleLogEntry[];
 }
 

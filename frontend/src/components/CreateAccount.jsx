@@ -70,15 +70,17 @@ function CreateAccount() {
       }
       <form onSubmit={handleCreation}>
         <Grid container spacing={1} alignItems="center" columns={5}>
-          <Grid item xs={1}>Tunnus:</Grid>
-          <Grid item xs={4}><TextField name="tunnus" required onChange={handleFieldChange} /></Grid>
-          <Grid item xs={1}>Salasana:</Grid>
-          <Grid item xs={4}><TextField name="password" required type="password" onChange={handleFieldChange} /></Grid>
-          <Grid item xs={1}>Vahvista salasana:</Grid>
-          <Grid item xs={4}><TextField name="password2" required type="password" onChange={handleFieldChange} /></Grid>
-          <Grid item xs={1}>Email:</Grid>
-          <Grid item xs={4}><TextField name="email" placeholder="Iimeil" onChange={handleFieldChange} /></Grid>
-          <Grid item xs={5}>
+          <Grid item md={1} xs={3}>Tunnus:</Grid>
+          <Grid item md={4} xs={3}>
+            <TextField name="tunnus" style={{ minWidth: '50%' }} required onChange={handleFieldChange} />
+          </Grid>
+          <Grid item md={1} xs={3}>Salasana:</Grid>
+          <Grid item md={4} xs={3}><TextField style={{ minWidth: '50%' }} name="password" required type="password" onChange={handleFieldChange} /></Grid>
+          <Grid item md={1} xs={3}>Vahvista salasana:</Grid>
+          <Grid item md={4} xs={3}><TextField style={{ minWidth: '50%' }} name="password2" required type="password" onChange={handleFieldChange} /></Grid>
+          <Grid item md={1} xs={3}>Email:</Grid>
+          <Grid item md={4} xs={3}><TextField style={{ minWidth: '50%' }} name="email" placeholder="Iimeil" onChange={handleFieldChange} /></Grid>
+          <Grid item md={5} xs={3}>
             <Button size="large" variant="contained" disabled={!tunnukset.valid} type="submit">
               Luo tunnukset
             </Button>

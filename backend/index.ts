@@ -6,6 +6,7 @@ import typeDefs from './graphql/typedefs';
 import resolvers from './graphql/resolvers';
 import jwt from 'jsonwebtoken';
 import { DecodedToken } from './types';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 const app = express();
 
@@ -17,6 +18,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(graphqlUploadExpress());
+
 const server = new ApolloServer({
     typeDefs,
     resolvers,

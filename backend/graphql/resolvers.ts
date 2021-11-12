@@ -1,5 +1,5 @@
 import userService from '../services/userService';
-import { DecodedToken, MutationAddGameArgs, MutationAddUserArgs, MutationLoginArgs, SafeUser, User } from '../types';
+import { DecodedToken, GoodCompetitionData, MutationAddGameArgs, MutationAddUserArgs, MutationLoginArgs, RawCompetitionData, SafeUser, User } from '../types';
 import bcrypt from 'bcrypt';
 import { validString } from '../utils/validators';
 import { UserInputError, ApolloError, AuthenticationError } from 'apollo-server-errors';
@@ -8,6 +8,10 @@ import gameService from '../services/gameService';
 import { logProcess, readLogs } from '../services/logService';
 import statsService from '../services/statsService';
 import { median } from '../utils/mathAndShit';
+import { GraphQLUpload } from 'graphql-upload';
+import fs from 'fs';
+import { finished } from 'stream';
+import { parseCsv } from '../utils/csvParser';
 
 const resolvers = {
     Query: {
@@ -22,7 +26,7 @@ const resolvers = {
             return res;
         },
         getMe: async (_root: unknown, _args: unknown, context: { user: DecodedToken }) => {
-            if (!context.user) return null;
+            if (!context.user) null;
             return context.user;
         },
         getLogs: async (_root: unknown, args: { process: logProcess }, context: { user: DecodedToken }) => {
@@ -45,6 +49,10 @@ const resolvers = {
                 throw new AuthenticationError('Access denied');
             }
             const res = await userService.getAliases((args.userId || context.user.id));
+            return res;
+        },
+        getCompetitions: async( _root: unknown, _args: unknown, _contest: unknown) => {
+            const res = await statsService.getCompetitions() as Array<RawCompetitionData>;
             return res;
         }
     },
@@ -104,14 +112,35 @@ const resolvers = {
         deleteAlias: async (_root: unknown, args: { aliasId: number }, context: { user: DecodedToken }) => {
             if (!context?.user?.id) throw new AuthenticationError('Access denied');
             let userId: number | undefined = context.user.id;
-            
+
             if (context.user.rooli === 'admin') userId = undefined;
 
             const poistetut = await userService.deleteAlias(args.aliasId, userId);
             if (poistetut > 0)
                 return true;
             return false;
-        }
+        },
+        uploadCsvFile: async (_paret: unknown, args: any, context: { user: DecodedToken }) => {
+            if (!context.user?.id) throw new AuthenticationError('Access denied');
+            return args.file.then((file: any) => {
+                const { createReadStream, filename, mimetype } = file
+                const fileStream = createReadStream();
+                fileStream.pipe(fs.createWriteStream(`./upload/${context.user.name}.csv`));
+                finished(fileStream, () => {
+                    parseCsv(`${context.user.name}.csv`, context.user.name);
+                })
+                return file;
+            });
+        },
+    },
+    Upload: GraphQLUpload,
+
+    Competition: {
+        hc: (root: StatsRootArgs) => {
+            if (!root.tenLatestRounds) return 0;
+            const kierrokset = root.tenLatestRounds.split(',').map(Number);
+            return median(kierrokset) - root.par;
+        },
     },
     SimpleCourseStats: {
         tenLatestRounds: (root: StatsRootArgs) => {
@@ -122,7 +151,6 @@ const resolvers = {
         },
     },
 }
-
 interface StatsRootArgs {
     tenLatestRounds: string,
     tenLatestMedian: number,

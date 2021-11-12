@@ -12,7 +12,7 @@ const useAliases = () => {
     if (!aliasQuery.loading && aliasQuery && aliasQuery.data) {
       setAliakset(aliasQuery.data.getAliases);
     }
-  });
+  }, [aliasQuery.data]);
   const addAlias = async (alias, callBack) => {
     const res = await addAliasMutation({ variables: { alias } });
     callBack(res.data.addAlias);

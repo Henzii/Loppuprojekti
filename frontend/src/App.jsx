@@ -8,18 +8,19 @@ import LoggedUserProvider from './components/LoggedUserProvider';
 import MyStats from './components/MyStats';
 import UploadCsv from './components/UploadCsv';
 import Settings from './components/Settings';
+import Competitions from './components/Competitions';
 
 function App() {
-  //  const { loggedIn } = useMe();
   return (
     <LoggedUserProvider>
       <AppBar />
       <Routes>
-        <Route path="/logs" element={<ReadLogs />} />
         <Route path="/" element={<Frontpage />} />
+        <Route path="/competitions" element={<Competitions />} />
         <Route path="/stats" element={<MyStats />} />
         <Route path="/upload" element={<UploadCsv />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/logs" element={<ReadLogs />} />
       </Routes>
     </LoggedUserProvider>
   );

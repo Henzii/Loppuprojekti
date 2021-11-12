@@ -1,21 +1,21 @@
 import React from 'react';
 import { Container, Divider, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+
 import { useLoggedIn } from './LoggedUserProvider';
 import LogoutButton from './LogoutButton';
 import CreateAccount from './CreateAccount';
 import LoginForm from './LoginForm';
-import Aliases from './Aliases';
 
 const Frontpage = () => {
   const me = useLoggedIn();
   if (me) {
     return (
       <Container>
-        <Link to="/logs">Lokikirja</Link>
-        <br />
+        Kirjautunut&nbsp;
+        <b>
+          {me.name}
+        </b>
         <LogoutButton />
-        <Aliases />
       </Container>
     );
   }
@@ -23,7 +23,8 @@ const Frontpage = () => {
     <Container>
       <Typography gutterBottom variant="h2">Tervetuloa</Typography>
       <Typography>
-        Kirjaudu joko sisään tai luo uusi tunnus.
+        Voit kirjautua sisään kirjautumalla sisään tai luoda uuden tunnuksen
+        luomalla uuden tunnuksen.
       </Typography>
       <Typography variant="h4">Kirjaudu</Typography>
       <LoginForm />

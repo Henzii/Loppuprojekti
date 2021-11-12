@@ -7,11 +7,14 @@ const useMe = () => {
   const { loading, data } = useQuery(GET_ME);
 
   useEffect(() => {
-    if (!loading && data?.getMe) {
-      setMe(data.getMe);
+    if (!loading) {
+      if (data?.getMe) {
+        setMe(data.getMe);
+      } else {
+        setMe(undefined);
+      }
     }
   }, [loading, data]);
-
   return me;
 };
 

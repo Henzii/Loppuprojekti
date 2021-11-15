@@ -12,9 +12,15 @@ import { GraphQLUpload } from 'graphql-upload';
 import fs from 'fs';
 import { finished } from 'stream';
 import { parseCsv } from '../utils/csvParser';
+import setupService from '../services/setupService';
 
 const resolvers = {
     Query: {
+        getSetup: async (_roow: unknown, _args: unknown, context: ContextUserToken) => {
+            if (context.user?.rooli !== 'admin') throw new AuthenticationError('Access denied');
+            const res = await setupService.getSetup();
+            return res;
+        },
         getUsers: async () => {
             const res = await userService.getAllUsers();
             return res;
@@ -136,6 +142,10 @@ const resolvers = {
                 return file;
             });
         },
+        setSetup: async(_root: unknown, args: SetupArgs, context: ContextUserToken) => {
+            if (context.user?.rooli !== 'admin') throw new AuthenticationError('Access denied');
+            console.log( await setupService.writeSetup(args)) ;
+        },
     },
     Upload: GraphQLUpload,
 
@@ -161,5 +171,13 @@ interface StatsRootArgs {
     hc: number,
     par: number
 }
-
+export type SetupArgs = {
+    minPlayersForMatch?: number,
+    minPlayersForHc?: number,
+    ignoreHcBefore?: string,
+    ignoreMatchBefore?: string,
+}
+type ContextUserToken = {
+    user: DecodedToken
+}
 export default resolvers;

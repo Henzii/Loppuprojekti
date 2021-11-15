@@ -3,6 +3,7 @@ import { gql } from 'apollo-server-express';
 const typeDefs = gql`
 
     scalar Upload
+    scalar Date
 
     type Alias {
         id: ID!
@@ -41,6 +42,12 @@ const typeDefs = gql`
         tenLatestMedian: Float
         hc: Float
     }
+    type Setup {
+        minPlayersForMatch: Int!
+        minPlayersForHc: Int!
+        ignoreMatchBefore: Date!
+        ignoreHcBefore: Date!
+    }
     input Game {
         course: String!
         layout: String!
@@ -63,6 +70,7 @@ const typeDefs = gql`
         getAliases( userId: ID): [Alias]!
 
         getCompetitions: [Competition]
+        getSetup: Setup!
     }
     type Competition {
         game: Int
@@ -83,6 +91,13 @@ const typeDefs = gql`
         deleteAlias(aliasId: Int!): Boolean
 
         uploadCsvFile(file: Upload!): File!
+
+        setSetup(
+            minPlayersForMatch: Int,
+            minPlayersForHc: Int,
+            ignoreHcBefore: Date,
+            ignoreMatchBefore: Date
+        ): String
     }
 `;
 

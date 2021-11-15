@@ -7,13 +7,13 @@ import CreateAccount from './CreateAccount';
 import LoginForm from './LoginForm';
 
 const Frontpage = () => {
-  const me = useLoggedIn();
-  if (me) {
+  const loggedIn = useLoggedIn();
+  if (loggedIn) {
     return (
       <Container>
         Kirjautunut&nbsp;
         <b>
-          {me.name}
+          {loggedIn.name}
         </b>
         <LogoutButton />
       </Container>

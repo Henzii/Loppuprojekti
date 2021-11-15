@@ -26,7 +26,6 @@ function LoginForm() {
         include: [GET_ME],
       });
     } catch (error) {
-      console.log(error);
       enqueueSnackbar('Väärä tunnus tai salasana!', { variant: 'error' });
     } finally {
       e.target.tunnus.value = '';
@@ -45,7 +44,7 @@ function LoginForm() {
             <TextField name="password" type="password" variant="outlined" placeholder="Salasana..." />
           </Grid>
           <Grid item xs={1}>
-            <LoadingButton loading={loading} type="submit" variant="contained" size="large"> Kirjaudu</LoadingButton>
+            <LoadingButton loading={loading} type="submit" size="large"> Kirjaudu</LoadingButton>
           </Grid>
         </Grid>
       </form>

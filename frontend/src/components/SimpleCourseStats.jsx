@@ -36,7 +36,7 @@ const SimpleCourseStats = ({ data }) => {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <Card style={{ marginBottom: '10px' }}>
+    <Card style={{ marginBottom: '15px' }}>
       <CardHeader
         title={data.rata}
         subheader={data.layout}

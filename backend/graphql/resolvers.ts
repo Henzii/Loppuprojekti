@@ -25,8 +25,12 @@ const resolvers = {
             );
             return res;
         },
-        getMe: async (_root: unknown, _args: unknown, context: { user: DecodedToken }) => {
-            if (!context.user) null;
+        getMe: async (_root: unknown, args: { fetchFromDatabase: boolean }, context: { user: DecodedToken }) => {
+            if (!context.user) return null;
+            if (args.fetchFromDatabase) {
+                const res = await userService.getUser( context.user.id );
+                return res;
+            }
             return context.user;
         },
         getLogs: async (_root: unknown, args: { process: logProcess }, context: { user: DecodedToken }) => {

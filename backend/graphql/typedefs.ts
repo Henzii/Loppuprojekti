@@ -18,6 +18,7 @@ const typeDefs = gql`
         id: ID!
         name: String!
         rooli: String!
+        email: String
     }
  
     type LogEntry {
@@ -55,7 +56,7 @@ const typeDefs = gql`
     type Query {
         getUsers: [User]!
         getUser(id: Int, name: String): User
-        getMe: User
+        getMe(fetchFromDatabase: Boolean): User
         getLogs(process: String): [LogEntry]!
 
         getCourseStats: [SimpleCourseStats]

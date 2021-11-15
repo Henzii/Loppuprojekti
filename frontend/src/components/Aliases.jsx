@@ -38,7 +38,7 @@ const Aliases = () => {
   return (
     <div>
       <h2>Aliaksesi</h2>
-      <Grid container alignItems="center">
+      <Grid container alignItems="center" width="600px">
         {aliakset.map((a) => <SingleAlias alias={a} key={a.id} del={handleRemoveAlias} />)}
       </Grid>
       <h3>Lisää alias</h3>

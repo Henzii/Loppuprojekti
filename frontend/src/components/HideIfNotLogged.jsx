@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useMe from '../hooks/useMe';
+import { useLoggedIn } from './LoggedUserProvider';
 
 const HideIfNotLogged = ({ children }) => {
-  const me = useMe();
-  if (!me) return (<></>);
+  const loggedIn = useLoggedIn();
+  if (!loggedIn) return (<></>);
 
   return (
     <>

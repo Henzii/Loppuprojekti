@@ -7,7 +7,7 @@ const UserContext = createContext();
 export const useLoggedIn = () => useContext(UserContext);
 
 const LoggedUserProvider = ({ children }) => {
-  const me = useMe();
+  const { me } = useMe();
   return (
     <UserContext.Provider value={me}>
       {children}

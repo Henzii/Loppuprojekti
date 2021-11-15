@@ -4,6 +4,9 @@
 body {
   margin: 0;
 }
+.MuiTypography-root {
+  font-family: Quicksand;
+}
 .lokikirja :nth-child(3) {
   background-color: skyblue;
 }

@@ -15,3 +15,14 @@ query {
   }
 }
 `;
+
+export const GET_SETUP = gql`
+query {
+  getSetup {
+    ignoreHcBefore
+    ignoreMatchBefore
+    minPlayersForHc
+    minPlayersForMatch
+  }
+}
+`;

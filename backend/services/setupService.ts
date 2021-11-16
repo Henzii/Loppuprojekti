@@ -1,6 +1,6 @@
 import { RowDataPacket } from "mysql2";
 import { makeConnection } from "../utils/mySqlHelpers"
-import { SetupArgs } from '../graphql/resolvers';
+import { SetupArgs } from "../graphql/mutations";
 
 const getSetup = async () => {
     const con = await makeConnection();

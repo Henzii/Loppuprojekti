@@ -1,7 +1,9 @@
 import fs from 'fs/promises';
-import gameService, { Game } from '../services/gameService';
+import gameService from '../services/gameService';
 import { makeConnection } from './mySqlHelpers';
 import log from '../services/logService';
+
+import { Game } from '../types';
 
 export const parseCsv = async (fileName: string, uploaderName = 'unknown') => {
 
@@ -9,7 +11,7 @@ export const parseCsv = async (fileName: string, uploaderName = 'unknown') => {
     const rawFile = await fs.readFile(`./upload/${fileName}`, 'utf8') as unknown as string;
 
     const [, ...rivit] = rawFile.split('\n');
-    log('CsvParser', 'info', `Aloitetaan parisa käyttäjältä ${uploaderName} saatua csv-tiedostoa. Sislätö: ${rivit.length} riviä.`);
+    log('CsvParser', 'info', `Aloitetaan parsia käyttäjältä ${uploaderName} saatua csv-tiedostoa. Sislätö: ${rivit.length} riviä.`);
     let gameData: Game | undefined;
     let addedGames = 0;
     let totalGames = 0;
@@ -21,6 +23,7 @@ export const parseCsv = async (fileName: string, uploaderName = 'unknown') => {
         // Rata vaihtuu -> uusi peli!
         if (player === 'Par' || player === '') {
             if (gameData) {
+                // Lisätään peli tietokantaa. Jos !iidee, peli on jo tod. näk. tietokannassa
                 const iidee = await gameService.addGame(gameData, dbConnection);
                 if (!iidee) {
                     console.log(`Peliä ${gameData.course} @ ${gameData.date} ei lisätty!`);

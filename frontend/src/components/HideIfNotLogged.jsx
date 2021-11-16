@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useLoggedIn } from './LoggedUserProvider';
 
-const HideIfNotLogged = ({ children }) => {
+const HideIfNotLogged = ({ children, rooli }) => {
   const loggedIn = useLoggedIn();
-  if (!loggedIn) return (<></>);
+  if (!loggedIn || (rooli !== '' && loggedIn.rooli !== rooli)) return (<></>);
 
   return (
     <>
@@ -12,9 +12,15 @@ const HideIfNotLogged = ({ children }) => {
     </>
   );
 };
-
+HideIfNotLogged.defaultProps = {
+  rooli: '',
+};
 HideIfNotLogged.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.shape(),
+  ]).isRequired,
+  rooli: PropTypes.string,
 };
 
 export default HideIfNotLogged;

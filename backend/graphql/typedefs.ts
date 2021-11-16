@@ -61,7 +61,7 @@ const typeDefs = gql`
         scores: [Int!]!
     }
     type Query {
-        getUsers: [User]!
+        getUsers(active: Boolean): [User]!
         getUser(id: Int, name: String): User
         getMe(fetchFromDatabase: Boolean): User
         getLogs(process: String): [LogEntry]!
@@ -71,6 +71,7 @@ const typeDefs = gql`
 
         getCompetitions: [Competition]
         getSetup: Setup!
+
     }
     type Competition {
         game: Int
@@ -91,6 +92,9 @@ const typeDefs = gql`
         deleteAlias(aliasId: Int!): Boolean
 
         uploadCsvFile(file: Upload!): File!
+
+        updateUser(email: String, password: String): String
+        activateUser(userId: ID!): String
 
         setSetup(
             minPlayersForMatch: Int,

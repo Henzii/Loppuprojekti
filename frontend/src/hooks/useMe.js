@@ -1,9 +1,8 @@
 import { useQuery } from '@apollo/client';
-import { formGroupClasses } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { GET_ME } from '../graphql/mutations';
 
-const useMe = (fetchFromDatabase = formGroupClasses) => {
+const useMe = (fetchFromDatabase = undefined) => {
   const [me, setMe] = useState(null);
   const { loading, data } = useQuery(GET_ME, { variables: { fetchFromDatabase } });
 

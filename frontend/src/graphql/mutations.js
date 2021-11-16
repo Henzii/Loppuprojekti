@@ -1,5 +1,16 @@
 import { gql } from '@apollo/client';
 
+export const SAVE_SETUP = gql`
+  mutation ($minPlayersForMatch: Int, $minPlayersForHc: Int, $ignoreHcBefore: Date, $ignoreMatchBefore: Date) {
+    setSetup(
+      minPlayersForMatch: $minPlayersForMatch,
+      minPlayersForHc: $minPlayersForHc,
+      ignoreHcBefore: $ignoreHcBefore,
+      ignoreMatchBefore: $ignoreMatchBefore
+    )
+  }
+`;
+
 export const UPLOAD_CSV = gql`
   mutation($file: Upload!) {
     uploadCsvFile(file: $file) {

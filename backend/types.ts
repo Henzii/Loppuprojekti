@@ -1,5 +1,3 @@
-import { Game } from "./services/gameService"
-
 export interface User {
     id: number,
     name: string,
@@ -7,27 +5,6 @@ export interface User {
     rooli: string,
     passwordHash: string,
     active: boolean
-}
-export type SafeUser = Omit<User, "passwordHash">
-
-export type MutationLoginArgs = {
-    name: string | undefined,
-    password: string | undefined
-}
-export type MutationAddUserArgs = {
-    name: string | undefined,
-    email: string | undefined,
-    password: string | undefined
-}
-export type MutationAddGameArgs = {
-    game: Game
-}
-
-export type DecodedToken = {
-    name: string,
-    id: number,
-    rooli: string,
-    iat: number
 }
 
 export type RawCompetitionData = {
@@ -47,3 +24,32 @@ export type GoodCompetitionData = {
     date: Date,
     players: number
 }
+export type DecodedToken = {
+    name: string,
+    id: number,
+    rooli: string,
+    iat: number
+}
+export type ContextUserToken = {
+    user: DecodedToken
+}
+
+export type MutationAddGameArgs = {
+    game: Game
+}
+export type SafeUser = Omit<User, "passwordHash">
+
+export interface Game {
+    course: string,
+    layout: string,
+    date: Date,
+    par: number,
+    players: Array<Player>
+}
+export interface Player {
+    name: string,
+    total: number,
+    scores: Array<number>
+}
+export type GameID = number;
+export type CourseID = number;

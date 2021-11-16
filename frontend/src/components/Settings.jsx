@@ -6,6 +6,8 @@ import {
 import React from 'react';
 import useMe from '../hooks/useMe';
 import Aliases from './Aliases';
+import HideIfNotLogged from './HideIfNotLogged';
+import Setup from './Setup';
 
 const Settings = () => {
   const { me } = useMe(true);
@@ -51,6 +53,10 @@ const Settings = () => {
         Aliakset yhdistävät csv-tiedostossa olevat pelaajat tunnuksiin.
       </p>
       <Aliases />
+      <Divider />
+      <HideIfNotLogged rooli="admin">
+        <Setup />
+      </HideIfNotLogged>
     </Container>
   );
 };

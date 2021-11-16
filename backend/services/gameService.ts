@@ -1,6 +1,8 @@
 import mysql from 'mysql2/promise';
 import { makeConnection } from "../utils/mySqlHelpers";
 
+import { Game, GameID, CourseID } from '../types';
+
 const addGame = async (gameData: Game, connection: mysql.Connection | undefined = undefined): Promise<GameID | null> => {
 
     const con = (connection !== undefined) ? connection : await makeConnection();
@@ -14,7 +16,7 @@ const addGame = async (gameData: Game, connection: mysql.Connection | undefined 
             layout: gameData.layout,
             date: gameData.date,
             par: +gameData.par
-        }, con)
+        }, con) as number
     }
 
     const gameid = await (createGame(id, gameData.date, con));    // Luodaan uusi peli
@@ -22,6 +24,7 @@ const addGame = async (gameData: Game, connection: mysql.Connection | undefined 
     if (!gameid) { if (!connection) con.end(); return null; }   // Jos peli on jo olemassa, palauta null
 
     for (const player of gameData.players) {
+        // Lisätään yhden pelaajan tuloskortti tietokantaan
         await connection?.query(`INSERT INTO scorecard (user, game, course, playerName, total, hc) VALUES (
             null,
             ${gameid},
@@ -30,6 +33,7 @@ const addGame = async (gameData: Game, connection: mysql.Connection | undefined 
             ${player.total},
             null);
         `);
+        // Lisätään yhden pelaajan tulokset score-taulukkoon
         const qry = `INSERT INTO score(scorecard, score, indeksi) VALUES
             ${player.scores.map((s,i) => `(last_insert_id(), ${s}, ${i+1})\n`)}
         ;`;
@@ -69,19 +73,7 @@ const createCourse = async (course: Omit<Game, "players">, con: mysql.Connection
         throw e;
     }
 }
-export interface Game {
-    course: string,
-    layout: string,
-    date: Date,
-    par: number,
-    players: Array<Player>
-}
-export interface Player {
-    name: string,
-    total: number,
-    scores: Array<number>
-}
-export type GameID = number;
-export type CourseID = number;
+
+
 
 export default { addGame }

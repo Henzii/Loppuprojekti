@@ -1,4 +1,3 @@
-import mysql from 'mysql2/promise';
 import { makeConnection } from "../utils/mySqlHelpers";
 
 const getSimpleCourseStats = async (id: number) => {

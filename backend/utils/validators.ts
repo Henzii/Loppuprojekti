@@ -1,4 +1,4 @@
-
+    
 export const validString = ( obj: unknown, allowEmptyString = false): obj is string => {
     if ( (obj instanceof String || typeof obj === 'string')) {  
         if (allowEmptyString !== true && obj as string === '') return false;

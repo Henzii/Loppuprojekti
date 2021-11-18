@@ -61,10 +61,29 @@ export const queries = {
             const res = await statsService.getCompetitions() as Array<RawCompetitionData>;
             if (!context.user?.id) {
                 return res.map((r, i) => {
-                    return { ...r, playerName: `Player ${i}` }
+                    return { ...r, playerName: names[Math.floor( Math.random() * names.length )] }
                 });
             }
             return res;
         }
     },
 };
+
+const names = [
+    'Uolevi',
+    'Torsti',
+    'Vemmel',
+    'Velmeri',
+    'Jonne',
+    'Pasi-Pekka',
+    'Jani-Petteri',
+    'Irmeli',
+    'Taisto',
+    'Leif',
+    'Jorma69',
+    'Usuknoob',
+    'Jallu',
+    'Pena',
+    'Mica',
+    'Jerry',
+];

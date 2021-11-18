@@ -8,7 +8,7 @@ import AppBarLink from './AppBarLink';
 import HideIfNotLogged from './HideIfNotLogged';
 
 const AppBar = () => (
-  <MuiAppBar position="static">
+  <MuiAppBar position="sticky" sx={{ minHeight: { md: '100px' } }} style={{ justifyContent: 'center' }}>
     <Toolbar>
       <Box sx={{ display: { xs: 'inline', md: 'none' } }}>
         <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
@@ -16,7 +16,7 @@ const AppBar = () => (
         </IconButton>
       </Box>
       <Box style={{ flexGrow: 1 }}>
-        <Typography variant="h4" component="span">Risbeegomfkerho</Typography>
+        <Typography variant="h3" component="span">Risbeegomfkerho</Typography>
       </Box>
       <Box sx={{ display: { xs: 'none', md: 'inline' } }}>
         <AppBarLink to="/" text="Etusivu" />

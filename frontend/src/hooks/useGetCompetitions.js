@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { GET_COMPETITIONS } from '../graphql/queries';
+import calculateRanks from '../utils/competitionStuff';
 
 const groupCompetitionsData = (data) => data.reduce((p, c) => {
   let obj = p.find((x) => x.gameId === c.game);
@@ -33,7 +34,10 @@ const useGetCompetitions = () => {
   const [competitions, setCompetitions] = useState(null);
   useEffect(() => {
     if (compQuery && !compQuery.loading) {
-      setCompetitions(groupCompetitionsData(compQuery.data.getCompetitions));
+      let data = compQuery.data.getCompetitions;
+      data = groupCompetitionsData(data);
+      data = data.map((c) => calculateRanks(c));
+      setCompetitions(data);
     }
   }, [compQuery]);
   return competitions;

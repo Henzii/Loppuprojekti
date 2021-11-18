@@ -1,26 +1,34 @@
 import {
-  Backdrop,
-  CircularProgress, Button,
+  Button,
   Container, Divider, Grid, TextField, Typography,
 } from '@mui/material';
 import React from 'react';
-import useMe from '../hooks/useMe';
-import Aliases from './Aliases';
-import HideIfNotLogged from './HideIfNotLogged';
-import Setup from './Setup';
+import { useSnackbar } from 'notistack';
+import useMe from '../../hooks/useMe';
+import Aliases from '../../components/Aliases';
+import HideIfNotLogged from '../../components/HideIfNotLogged';
+import AdminSetup from './AdminSettings';
+import LoadingPage from '../../components/LoadingPage';
 
 const Settings = () => {
   const { me } = useMe(true);
+  const { enqueueSnackbar } = useSnackbar();
+
   const handleEmailChange = (e) => {
     e.preventDefault();
     e.target.email.value = '';
   };
+  const handlePassWordChange = (e) => {
+    e.preventDefault();
+    const { salasana1, salasana2 } = e.target;
+    if (salasana1.value !== salasana2.value) {
+      enqueueSnackbar('Salasanat eivät täsmää!', { variant: 'error' });
+    }
+    salasana1.value = '';
+    salasana2.value = '';
+  };
   if (!me) {
-    return (
-      <Backdrop open>
-        <CircularProgress />
-      </Backdrop>
-    );
+    return <LoadingPage />;
   }
   return (
     <Container>
@@ -34,28 +42,34 @@ const Settings = () => {
       <Divider />
       <Typography variant="h4" gutterBottom>Vaihda email</Typography>
       <form onSubmit={handleEmailChange}>
-        <TextField name="email" placeholder="Uusi email" size="small" />
+        <TextField name="email" label="Uusi sähköpostiosoite" />
         &nbsp;
         <Button variant="contained" type="submit">Vaihda</Button>
       </form>
       <Divider />
-      <form>
+      <form onSubmit={handlePassWordChange}>
         <Typography variant="h4" gutterBottom>Vaihda salasana</Typography>
-        <TextField name="salasana1" type="password" />
-        <br />
-        <TextField name="salasana2" type="password" />
-        <br />
-        <Button type="submit" variant="contained">Vaihda</Button>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField name="salasana1" type="password" label="Uusi salasana" />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField name="salasana2" type="password" label="Vahvista salasana" />
+          </Grid>
+          <Grid item xs={12}>
+            <Button type="submit" variant="contained">Vaihda</Button>
+          </Grid>
+        </Grid>
       </form>
       <Divider />
       <Typography variant="h4" gutterBottom>Aliakset</Typography>
-      <p>
+      <Typography paragraph>
         Aliakset yhdistävät csv-tiedostossa olevat pelaajat tunnuksiin.
-      </p>
+      </Typography>
       <Aliases />
       <Divider />
       <HideIfNotLogged rooli="admin">
-        <Setup />
+        <AdminSetup />
       </HideIfNotLogged>
     </Container>
   );

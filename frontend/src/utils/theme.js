@@ -1,14 +1,30 @@
 import { createTheme } from '@mui/material/styles';
 
+const Breakpoint = '@media screen and (min-width: 800px)';
+
 const theme = createTheme({
   typography: {
     fontFamily: 'Quicksand',
   },
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#34568B',
+    },
+  },
   components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: '15px',
+          paddingLeft: '10px',
+        },
+      },
+    },
     MuiCardHeader: {
       styleOverrides: {
         title: {
-          '@media screen and (min-width: 800px)': {
+          [Breakpoint]: {
             fontSize: '1.7vw',
             margin: '0px',
           },
@@ -18,10 +34,47 @@ const theme = createTheme({
         },
       },
     },
+    MuiGrid: {
+      styleOverrides: {
+        root: {
+          [Breakpoint]: {
+            fontSize: '1.2rem',
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          // backgroundColor: 'black',
+        },
+      },
+      defaultProps: {
+        color: 'info',
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {
           margin: '10px 0px',
+        },
+        paragraph: {
+          fontSize: '1.2em',
+          [Breakpoint]: {
+            fontSize: '1.2vw',
+          },
+        },
+        h1: {
+          fontSize: '2.5rem',
+          [Breakpoint]: {
+            fontSize: '4vw',
+          },
+        },
+        h3: {
+          fontSize: '1.6rem',
+          [Breakpoint]: {
+            fontSize: '2vw',
+          },
         },
       },
     },
@@ -34,6 +87,16 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           margin: '20px 0px',
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          fontSize: '.6em',
+          [Breakpoint]: {
+            fontSize: '1.2em',
+          },
         },
       },
     },

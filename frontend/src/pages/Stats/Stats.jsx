@@ -1,19 +1,16 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import {
-  Backdrop, CircularProgress, Container, Typography,
+  Container, Typography,
 } from '@mui/material';
-import { GET_SIMPLE_COURSE_STATS } from '../graphql/mutations';
+import LoadingPage from '../../components/LoadingPage';
+import { GET_SIMPLE_COURSE_STATS } from '../../graphql/mutations';
 import SimpleCourseStats from './SimpleCourseStats';
 
-const MyStats = () => {
+const Stats = () => {
   const rataData = useQuery(GET_SIMPLE_COURSE_STATS);
   if (rataData.loading) {
-    return (
-      <Backdrop open>
-        <CircularProgress />
-      </Backdrop>
-    );
+    return <LoadingPage />;
   }
   if (!rataData.data) {
     return (
@@ -32,4 +29,4 @@ const MyStats = () => {
   );
 };
 
-export default MyStats;
+export default Stats;

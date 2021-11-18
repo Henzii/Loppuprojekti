@@ -3,9 +3,9 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useSnackbar } from 'notistack';
-import useSetup from '../hooks/useSetup';
+import useSetup from '../../hooks/useSetup';
 
-const Setup = () => {
+const AdminSettings = () => {
   const { setup, setSetup, saveSetup } = useSetup();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -47,4 +47,4 @@ const Setup = () => {
     </>
   );
 };
-export default Setup;
+export default AdminSettings;

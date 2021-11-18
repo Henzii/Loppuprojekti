@@ -2,13 +2,42 @@
   font-family: Quicksand, Arial, Helvetica, sans-serif;
 }
 body {
-  margin: 0;
+  margin: 0px;
+  background-color: black;
+  color: lightgray;
 }
-.MuiTypography-root {
-  font-family: Quicksand;
+body::before {
+  content: "";
+  background: no-repeat center url('./assets/risbee.jpg');
+  background-size: cover;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1;   
+}
+.MuiContainer-root {
+  background-color: rgba(30,30,30, 0.85);
+  padding: 20px;
+  min-height: 95vh;
+  z-index: 100;
+  position: relative;
+
+}
+.MuiContainer-root input:focus {
+  background-color: rgb(30,30,30);
+  border-color: gray;
 }
 .lokikirja :nth-child(3) {
   background-color: skyblue;
+}
+.kisataulu tr:nth-child(even) {
+  background-color: rgba(107, 107, 107, 0.2);
+}
+.kisataulu th {
+  font-weight: bold;
 }
 .stats-table td {
   font-family: Quicksand;
@@ -19,9 +48,6 @@ body {
 .stats-table th {
   text-align: center;
 }
-h1, h2, h3, h4, h5, h6 {
-  font-family: Quicksand, Roboto, Arial;
-}
 .navilinkki {
   text-decoration: none;
   color: inherit;
@@ -30,8 +56,9 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0px 20px;
 }
 .navilinkki:hover {
-  color: lightseagreen;
-  transition: 3s;
+  color: white;
+  transition: 1s ease-in-out;
+
 }
 .div-error {
   color: red;
@@ -39,6 +66,9 @@ h1, h2, h3, h4, h5, h6 {
   animation: errori 1s infinite ease-in-out;
   padding: 20px;
 
+}
+.largeFont {
+  font-size: 1.1em;
 }
 @keyframes errori {
   0% { 
@@ -55,5 +85,11 @@ h1, h2, h3, h4, h5, h6 {
 @media screen and (min-width: 1024px) {
   .stats-table th {
     font-size: 1vw;
+  }
+  .largeFont {
+    font-size: 1.5vw;
+  }
+  .MuiTypograpgy h4 {
+    font-size: 3vw;
   }
 }

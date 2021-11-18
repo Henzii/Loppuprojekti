@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TableCell, TableRow } from '@mui/material';
-import convertUTCDateToLocalDate from '../utils/dateAndTine';
+import convertUTCDateToLocalDate from '../../utils/dateAndTine';
 
 const SingleLogEntry = ({ log }) => {
   const {

@@ -43,7 +43,9 @@ const getCompetitions = async () => {
         select group_concat(tulos) from (
             select total as 'tulos' from scorecard s1
             inner join game on game = game.id
-            where playerName = s2.playerName and s1.course = s2.course and game.date < paivays
+            where playerName IN (SELECT alias from alias where user = (SELECT user from alias where alias = s2.playerName))
+                and s1.course = s2.course
+                and game.date < paivays
             order by game.date desc
             limit 10
         ) tenLates

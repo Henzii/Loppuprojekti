@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Card, CardContent, CardHeader, Collapse, IconButton, Table, TableBody,
-  TableCell, TableContainer, TableHead, TableRow, Container,
+  TableCell, TableContainer, TableHead, TableRow, Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { makeStyles } from '@mui/styles';
@@ -80,13 +80,11 @@ const SimpleCourseStats = ({ data }) => {
           </Table>
         </TableContainer>
         <Collapse in={showMore} mountOnEnter={false}>
-          <h3>10 viimeisintä kierrosta</h3>
-          <Container sx={{ fontSize: { xs: '0.8em', md: '1.5vw' } }}>
-            {data.tenLatestRounds.map((r, i) => {
-              const key = `${data.rata}${data.layout}${i}`;
-              return (<span key={key} style={{ marginRight: '5%' }}>{r - data.par}</span>);
-            })}
-          </Container>
+          <Typography variant="h5">10 viimeisintä kierrosta</Typography>
+          {data.tenLatestRounds.map((r, i) => {
+            const key = `${data.rata}${data.layout}${i}`;
+            return (<span className="largeFont" key={key} style={{ marginRight: '5%' }}>{r - data.par}</span>);
+          })}
         </Collapse>
       </CardContent>
     </Card>

@@ -4,10 +4,11 @@ import {
   Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography,
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import { GET_LOGS } from '../graphql/mutations';
+import { GET_LOGS } from '../../graphql/mutations';
+import LoadingPage from '../../components/LoadingPage';
 import SingleLogEntry from './SingleLogEntry';
 
-const ReadLogs = () => {
+const Logs = () => {
   const logsData = useQuery(GET_LOGS);
   const [logit, setLogit] = useState(null);
 
@@ -17,7 +18,7 @@ const ReadLogs = () => {
     }
   }, [logsData]);
 
-  if (!logit) return (<h1>Loading...</h1>);
+  if (!logit) return <LoadingPage />;
   return (
     <Container>
       <Typography variant="h3">Captain&apos;s log</Typography>
@@ -39,4 +40,4 @@ const ReadLogs = () => {
     </Container>
   );
 };
-export default ReadLogs;
+export default Logs;

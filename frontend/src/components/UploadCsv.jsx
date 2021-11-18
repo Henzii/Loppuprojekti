@@ -24,26 +24,27 @@ const UploadCsv = () => {
 
   return (
     <Container>
-      <Typography variant="h3">CSV-tiedoston lähetys</Typography>
-      <p>
+      <Typography variant="h2">CSV-tiedoston lähetys</Typography>
+      <Typography paragraph>
         Valitse UDiscistä saatava csv-tiedosto ja paina lähetä-nappia
-      </p>
-      <p>
+      </Typography>
+      <Typography paragraph>
         Kun tiedosto on lähetetty, parsii palvelin sitä kasaan ja tunkee sen sittne tietokantaan.
         Etenemistä voi seurata&nbsp;
         <Link to="/logs">kapteenin lokista</Link>
         .
-      </p>
+      </Typography>
       <form encType="multipart/form-data" onSubmit={handleUpload}>
         <input
           type="file"
           name="tiedosto"
           id="raised-button-file"
           accept=".csv"
+          style={{ fontSize: '1.2rem' }}
         />
-        <p>
+        <Typography>
           <Button variant="contained" type="submit">Lähetä nappi</Button>
-        </p>
+        </Typography>
       </form>
     </Container>
   );

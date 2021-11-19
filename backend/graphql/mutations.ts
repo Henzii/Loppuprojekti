@@ -17,7 +17,6 @@ import { DecodedToken, MutationAddGameArgs, SafeUser, ContextUserToken } from '.
 export const mutations = {
     Mutation: {
         addUser: async (_root: unknown, args: MutationAddUserArgs) => {
-
             if (!validString(args.name) || !validString(args.password)) throw new UserInputError('Argumentit ei kelpaa...');
 
             const hashedPassoword = await bcrypt.hash(args.password, 10);
@@ -37,6 +36,7 @@ export const mutations = {
                 throw new UserInputError('Väärä tunnus tai salasana')
             } else {
                 const user = await userService.getUser(name);
+                if (user?.active !== true) throw new AuthenticationError('Tunnusta ei ole aktivoitu!');
                 if (!user || !(await bcrypt.compare(password, user.passwordHash))) throw new UserInputError('Väärä tunnus tai salasana');
                 else {
                     const payload = {

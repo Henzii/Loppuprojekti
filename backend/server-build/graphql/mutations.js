@@ -87,6 +87,8 @@ exports.mutations = {
                     case 1: return [4 /*yield*/, userService_1.default.getUser(name)];
                     case 2:
                         user = _b.sent();
+                        if ((user === null || user === void 0 ? void 0 : user.active) !== true)
+                            throw new apollo_server_errors_1.AuthenticationError('Tunnusta ei ole aktivoitu!');
                         _a = !user;
                         if (_a) return [3 /*break*/, 4];
                         return [4 /*yield*/, bcryptjs_1.default.compare(password, user.passwordHash)];

@@ -1,5 +1,15 @@
 import { gql } from '@apollo/client';
 
+export const UPDATE_USER = gql`
+  mutation($email: String, $password: String) {
+    updateUser(email: $email, password: $password)
+  }
+`;
+export const ACTIVATE_USER = gql`
+  mutation($userId: ID!) {
+    activateUser(userId: $userId)
+  }
+`;
 export const SAVE_SETUP = gql`
   mutation ($minPlayersForMatch: Int, $minPlayersForHc: Int, $ignoreHcBefore: Date, $ignoreMatchBefore: Date) {
     setSetup(
@@ -57,11 +67,12 @@ export const GET_LOGS = gql`
 `;
 
 export const GET_ME = gql`
-query {
-  getMe {
+query ($fetchFromDatabase: Boolean) {
+  getMe (fetchFromDatabase: $fetchFromDatabase) {
     id
     name
     rooli
+    email
   }
 }
 `;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useLoggedIn } from './LoggedUserProvider';
 
 const HideIfNotLogged = ({ children, rooli }) => {
-  const loggedIn = useLoggedIn();
+  const { me: loggedIn } = useLoggedIn();
   if (!loggedIn || (rooli !== '' && loggedIn.rooli !== rooli)) return (<></>);
 
   return (

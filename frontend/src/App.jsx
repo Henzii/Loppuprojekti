@@ -43,7 +43,7 @@ function App() {
             events: {
               onHover: {
                 enable: true,
-                mode: 'attract',
+                mode: 'repulse',
               },
             },
           },

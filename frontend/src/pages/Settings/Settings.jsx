@@ -11,11 +11,16 @@ import AdminSetup from './AdminSettings';
 import LoadingPage from '../../components/LoadingPage';
 
 const Settings = () => {
-  const { me } = useMe(true);
+  const { me, update } = useMe(true);
   const { enqueueSnackbar } = useSnackbar();
 
   const handleEmailChange = (e) => {
     e.preventDefault();
+    update({ email: e.target.email.value }).then(() => {
+      enqueueSnackbar('Sähköposti vaihdettu!', { variant: 'success' });
+    }).catch((err) => {
+      enqueueSnackbar(`Virhe sähköpostia vaihtaessa! (${err})`, { variant: 'error' });
+    });
     e.target.email.value = '';
   };
   const handlePassWordChange = (e) => {
@@ -23,6 +28,12 @@ const Settings = () => {
     const { salasana1, salasana2 } = e.target;
     if (salasana1.value !== salasana2.value) {
       enqueueSnackbar('Salasanat eivät täsmää!', { variant: 'error' });
+    } else {
+      update({ password: salasana1.value }).then(() => {
+        enqueueSnackbar('Salasana vaihdettu', { variant: 'info' });
+      }).catch(() => {
+        enqueueSnackbar('Virhe salasanaa vaihtaessa!', { variant: 'error' });
+      });
     }
     salasana1.value = '';
     salasana2.value = '';

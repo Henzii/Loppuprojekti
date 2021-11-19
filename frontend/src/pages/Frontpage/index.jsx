@@ -1,57 +1,75 @@
 import React from 'react';
-import { Container, Divider, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Typed from 'react-typed';
 
 import { useLoggedIn } from '../../components/LoggedUserProvider';
-import LogoutButton from '../../components/LogoutButton';
 import CreateAccount from '../../components/CreateAccount';
 import LoginForm from '../../components/LoginForm';
+import LoggedFrontPage from './LoggedFrontPage';
 
 const Frontpage = () => {
   const loggedIn = useLoggedIn();
-  if (loggedIn) {
+  if (loggedIn.me) {
     return (
-      <Container>
-        <Typography variant="h4">
-          Tervetuloa
-        </Typography>
-        <Typography paragraph>
-          Olet kirjautunut sisään tunnuksella&nbsp;
-          {loggedIn.name}
-        </Typography>
-        <Typography>
-          Eroa välittömästi kerhosta, tai siis&nbsp;
-          <LogoutButton />
-        </Typography>
-      </Container>
+      <LoggedFrontPage />
     );
   }
   return (
-    <Container>
-      <Typography variant="h1">
-        <Typed
-          strings={[
-            'fRisbeegolfkerh',
-            'Fisbeego',
-            'RFisbeegolf',
-            'Risbeegomfkerho',
-          ]}
-          typeSpeed={50}
-          backSpeed={40}
-          backDelay={10}
-          onComplete={(ref) => { ref.cursor.remove(); }}
-        />
-      </Typography>
-      <Typography paragraph>
-        Voit kirjautua sisään kirjautumalla sisään tai luoda uuden tunnuksen
-        luomalla uuden tunnuksen.
-      </Typography>
-      <Typography variant="h3">Kirjaudu</Typography>
-      <LoginForm />
-      <Divider />
-      <Typography variant="h3">Luo tunnus</Typography>
-      <CreateAccount />
-    </Container>
+    <>
+      <div className="wideContainer wideContainerTop">
+        <Typography variant="h1">
+          <Typed
+            strings={[
+              'fRisbeegolfkerh',
+              'Fisbeego',
+              'RFisbeegolf',
+              'Risbeegomfkerho',
+            ]}
+            typeSpeed={50}
+            backSpeed={40}
+            backDelay={10}
+            onComplete={(ref) => { ref.cursor.remove(); }}
+          />
+        </Typography>
+        <Typography paragraph>
+          Olet eksynyt Risbeegomfkerhon sivuille.
+        </Typography>
+        <Typography paragraph>
+          Omistatko jo tunnukset?&nbsp;
+          <a href="#login">Kirjaudu sisään!</a>
+        </Typography>
+      </div>
+      <div className="wideContainer splitContainer" id="login">
+        <div className="darkContainer">
+          <Typography paragraph style={{ margin: '20% 30%' }}>
+            <i>
+              &quot;Hauki on kala!&quot;
+            </i>
+            <br />
+            &nbsp; - Antti S.
+          </Typography>
+        </div>
+        <div>
+          <Typography variant="h3">Kirjaudu sisään</Typography>
+          <Typography paragraph>
+            Syötä tunnuksesi ja salasanasi alla oleviin kenttiin kirjautuaksesi sisään.
+          </Typography>
+          <LoginForm />
+        </div>
+      </div>
+      <div className="wideContainer">
+        <Typography variant="h3">Luo tunnuket</Typography>
+        <Typography paragraph>
+          Luo tunnukset täyttämällä alla oleva lomake. Sähköpostiosoite ei ole pakollinen.
+        </Typography>
+        <Typography paragraph>
+          Tunnukset eivät ole käytettävissä heti luomisen jälkeen, vaan jonkun täytyy
+          aktivoida ne ensin.
+        </Typography>
+        <CreateAccount />
+      </div>
+
+    </>
   );
 };
 export default Frontpage;

@@ -5,7 +5,6 @@ import { SetupArgs } from "../graphql/mutations";
 const getSetup = async () => {
     const con = await makeConnection();
     const [result] = await con.query('SELECT * from setup') as RowDataPacket[];
-    console.log(result[0]);
     con.end();
     return result[0];
 }

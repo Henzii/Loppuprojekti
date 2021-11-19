@@ -15,7 +15,15 @@ query {
   }
 }
 `;
-
+export const GET_USERS = gql`
+query {
+  getUsers (active: false) {
+    id
+    name
+    email
+  }
+}
+`;
 export const GET_SETUP = gql`
 query {
   getSetup {

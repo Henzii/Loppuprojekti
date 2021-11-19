@@ -6,7 +6,9 @@ import {
 } from '@mui/material';
 
 const SingleCompetition = ({ competition }) => {
-  const { course, date, players } = competition;
+  const {
+    course, date, players, gameId,
+  } = competition;
   return (
     <Card style={{ marginBottom: '20px' }}>
       <CardHeader
@@ -25,11 +27,12 @@ const SingleCompetition = ({ competition }) => {
                 <TableCell>HC</TableCell>
                 <TableCell>HC +/-</TableCell>
                 <TableCell>HC total</TableCell>
+                <TableCell>Points</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {players.map((p) => (
-                <TableRow>
+                <TableRow key={gameId + p.name}>
                   <TableCell>{p.rank}</TableCell>
                   <TableCell>{p.name}</TableCell>
                   <TableCell>{p.total}</TableCell>
@@ -37,6 +40,7 @@ const SingleCompetition = ({ competition }) => {
                   <TableCell>{p.hc}</TableCell>
                   <TableCell>{p.hcPlusminus}</TableCell>
                   <TableCell>{p.hcTotal}</TableCell>
+                  <TableCell>{p.points}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

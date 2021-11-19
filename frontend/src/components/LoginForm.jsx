@@ -21,6 +21,7 @@ function LoginForm() {
           },
         },
       );
+      window.scrollTo(0, 0);
       document.cookie = `suklaaKeksi=${res.data.login}`;
       await client.refetchQueries({
         include: [GET_ME],

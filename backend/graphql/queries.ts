@@ -36,12 +36,11 @@ export const queries = {
             return context.user;
         },
         getLogs: async (_root: unknown, args: { process: logProcess }, context: { user: DecodedToken }) => {
-            const prosessi = (args.process) ? args.process : '';
-
-            // Kirjautuneille CsvParserin logit, adminille kaikki
-            if (!context.user || (prosessi !== 'CsvParser' && context.user.rooli !== 'admin')) {
-                throw new AuthenticationError('Ei oikeuksia!')
-            }
+            let prosessi: logProcess | '';
+            if (!context.user) throw new AuthenticationError('Access denied');
+            if (context.user.rooli !== 'admin')  {
+                prosessi = 'CsvParser';
+            } else prosessi = '';
             const res = await readLogs(prosessi);
             return res;
         },
@@ -51,7 +50,7 @@ export const queries = {
             return res;
         },
         getAliases: async (_root: unknown, args: { userId: number }, context: { user: DecodedToken }) => {
-            if (!context.user || (args.userId !== context.user.id && context.user.rooli !== 'admin')) {
+            if (!context.user || (args.userId && args.userId !== context.user.id && context.user.rooli !== 'admin')) {
                 throw new AuthenticationError('Access denied');
             }
             const res = await userService.getAliases((args.userId || context.user.id));
@@ -61,7 +60,7 @@ export const queries = {
             const res = await statsService.getCompetitions() as Array<RawCompetitionData>;
             if (!context.user?.id) {
                 return res.map((r, i) => {
-                    return { ...r, playerName: names[Math.floor( Math.random() * names.length )] }
+                    return { ...r, playerName: names[Math.floor(Math.random() * names.length)] }
                 });
             }
             return res;

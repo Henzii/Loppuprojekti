@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-const Breakpoint = '@media screen and (min-width: 800px)';
+const Breakpoint = '@media screen and (min-width: 900px)';
 
 const theme = createTheme({
   typography: {
@@ -59,6 +59,7 @@ const theme = createTheme({
           margin: '10px 0px',
         },
         paragraph: {
+          margin: '4rem 0px',
           fontSize: '1.2em',
           [Breakpoint]: {
             fontSize: '1.2vw',
@@ -68,6 +69,12 @@ const theme = createTheme({
           fontSize: '2.5rem',
           [Breakpoint]: {
             fontSize: '4vw',
+          },
+        },
+        h2: {
+          fontSize: '2.3rem',
+          [Breakpoint]: {
+            fontSize: '3vw',
           },
         },
         h3: {

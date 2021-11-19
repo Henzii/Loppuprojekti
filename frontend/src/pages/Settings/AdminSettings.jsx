@@ -4,6 +4,7 @@ import {
 import React from 'react';
 import { useSnackbar } from 'notistack';
 import useSetup from '../../hooks/useSetup';
+import UnActivatedUsers from '../../components/UnActivatedUsers';
 
 const AdminSettings = () => {
   const { setup, setSetup, saveSetup } = useSetup();
@@ -23,7 +24,10 @@ const AdminSettings = () => {
   };
   return (
     <>
-      <Typography variant="h4">Lisäasetukset</Typography>
+      <Typography variant="h3">Lisäasetukset</Typography>
+      <Typography variant="h4">Ei-aktivoidut käyttäjät</Typography>
+      <UnActivatedUsers />
+      <Typography variant="h4">Kisa-asetukset</Typography>
       <Grid container spacing={2}>
         {Object.keys(setup).map((k) => {
           if (k.startsWith('__')) return '';

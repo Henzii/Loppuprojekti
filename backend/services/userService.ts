@@ -14,7 +14,6 @@ const getAllUsers = async ( active: boolean | undefined = undefined): Promise<Us
             SELECT * FROM user
             ${(active !== undefined) ? 'WHERE active = ?' : ''}
         `
-        console.log(query, active);
         const [rows] = await con.query(query, [active]) as unknown[];
         return rows as User[];
 
@@ -97,7 +96,7 @@ const updateUser = async (passwordHash: string | undefined, email: string | unde
     if (passwordHash) vars.push(passwordHash);
     const query = `
         UPDATE user SET
-        ${(email) ? 'email = ?,' : ''}
+        ${(email) ? 'email = ?' : ''}${(vars.length > 1) ? ',' : ''}
         ${(passwordHash) ? 'passwordHash = ?' : ''}
         WHERE id = ?
     `;

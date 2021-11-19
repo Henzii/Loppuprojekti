@@ -51,12 +51,12 @@ var parseCsv = function (fileName, uploaderName) {
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    console.log("Aloitetaan tiedoston " + fileName + " parsiminen...");
-                    return [4 /*yield*/, promises_1.default.readFile("./upload/" + fileName, 'utf8')];
+                    console.log("Aloitetaan tiedoston ".concat(fileName, " parsiminen..."));
+                    return [4 /*yield*/, promises_1.default.readFile("./upload/".concat(fileName), 'utf8')];
                 case 1:
                     rawFile = _c.sent();
                     _a = rawFile.split('\n'), rivit = _a.slice(1);
-                    (0, logService_1.default)('CsvParser', 'info', "Aloitetaan parsia k\u00E4ytt\u00E4j\u00E4lt\u00E4 " + uploaderName + " saatua csv-tiedostoa. Sisl\u00E4t\u00F6: " + rivit.length + " rivi\u00E4.");
+                    (0, logService_1.default)('CsvParser', 'info', "Aloitetaan parsia k\u00E4ytt\u00E4j\u00E4lt\u00E4 ".concat(uploaderName, " saatua csv-tiedostoa. Sisl\u00E4t\u00F6: ").concat(rivit.length, " rivi\u00E4."));
                     addedGames = 0;
                     totalGames = 0;
                     return [4 /*yield*/, (0, mySqlHelpers_1.makeConnection)()];
@@ -75,10 +75,10 @@ var parseCsv = function (fileName, uploaderName) {
                 case 4:
                     iidee = _c.sent();
                     if (!iidee) {
-                        console.log("Peli\u00E4 " + gameData.course + " @ " + gameData.date + " ei lis\u00E4tty!");
+                        console.log("Peli\u00E4 ".concat(gameData.course, " @ ").concat(gameData.date, " ei lis\u00E4tty!"));
                     }
                     else {
-                        console.log("Lis\u00E4tty " + gameData.course + ", id: " + iidee);
+                        console.log("Lis\u00E4tty ".concat(gameData.course, ", id: ").concat(iidee));
                         addedGames++;
                     }
                     totalGames++;
@@ -108,7 +108,7 @@ var parseCsv = function (fileName, uploaderName) {
                 case 9:
                     _c.sent();
                     dbConnection.end();
-                    (0, logService_1.default)('CsvParser', 'success', "K\u00E4ytt\u00E4j\u00E4n " + uploaderName + " .csv tiedostosta l\u00F6ytyi " + totalGames + " kierrosta joista " + addedGames + " lis\u00E4ttiin tietokantaan");
+                    (0, logService_1.default)('CsvParser', 'success', "K\u00E4ytt\u00E4j\u00E4n ".concat(uploaderName, " .csv tiedostosta l\u00F6ytyi ").concat(totalGames, " kierrosta joista ").concat(addedGames, " lis\u00E4ttiin tietokantaan"));
                     console.log('Pelejä lisätty:', addedGames, '/', totalGames);
                     return [2 /*return*/];
             }

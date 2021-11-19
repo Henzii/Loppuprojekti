@@ -43,7 +43,9 @@ server.start().then(function () {
             res.sendFile(path_1.default.resolve(__dirname, '../frontend/build/index.html'));
     });
     server.applyMiddleware({ app: app, cors: false });
-    app.listen({ port: process.env.PORT || 4000 }, function () {
+    app.listen({ port: process.env.PORT || 8080 }, function () {
         console.log('Server running... maybe');
     });
+}).catch(function (error) {
+    console.log('Yhteyttä ei voida muodostaa!', error);
 });

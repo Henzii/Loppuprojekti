@@ -51,7 +51,7 @@ var readLogs = function (process) { return __awaiter(void 0, void 0, void 0, fun
             case 0: return [4 /*yield*/, (0, mySqlHelpers_1.makeConnection)()];
             case 1:
                 con = _a.sent();
-                return [4 /*yield*/, con.query("SELECT * from logs " + (process !== '' ? 'where process = ?' : ''), process)];
+                return [4 /*yield*/, con.query("SELECT * from logs ".concat((process !== '' ? 'where process = ?' : '')), process)];
             case 2:
                 rows = (_a.sent())[0];
                 return [2 /*return*/, rows];

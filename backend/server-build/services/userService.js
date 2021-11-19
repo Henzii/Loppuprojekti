@@ -63,7 +63,7 @@ var getAllUsers = function (active) {
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 4, 5, 6]);
-                    query = "\n            SELECT * FROM user\n            " + ((active !== undefined) ? 'WHERE active = ?' : '') + "\n        ";
+                    query = "\n            SELECT * FROM user\n            ".concat((active !== undefined) ? 'WHERE active = ?' : '', "\n        ");
                     return [4 /*yield*/, con.query(query, [active])];
                 case 3:
                     rows = (_a.sent())[0];
@@ -89,7 +89,7 @@ var getUser = function (param) { return __awaiter(void 0, void 0, void 0, functi
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 4, 5, 6]);
-                return [4 /*yield*/, con.query("SELECT * from user WHERE " + ((typeof param === 'string') ? 'name' : 'id') + " = ?", param)];
+                return [4 /*yield*/, con.query("SELECT * from user WHERE ".concat((typeof param === 'string') ? 'name' : 'id', " = ?"), param)];
             case 3:
                 rows = (_a.sent())[0];
                 if (rows.length === 0)
@@ -118,11 +118,11 @@ var addUser = function (name, email, password) { return __awaiter(void 0, void 0
                 return [4 /*yield*/, con.query("INSERT INTO user (name, email, passwordHash, rooli) VALUES (?)", [[name, email, password, 'user']])];
             case 3:
                 rows = (_a.sent())[0];
-                (0, logService_1.default)('UserService', 'success', "Tunnus " + name + " luotiin onnistuneesti");
+                (0, logService_1.default)('UserService', 'success', "Tunnus ".concat(name, " luotiin onnistuneesti"));
                 return [2 /*return*/, rows];
             case 4:
                 e_3 = _a.sent();
-                (0, logService_1.default)('UserService', 'error', "Tunnuksen " + name + " luonti ep\u00E4onnistui. Error: " + e_3);
+                (0, logService_1.default)('UserService', 'error', "Tunnuksen ".concat(name, " luonti ep\u00E4onnistui. Error: ").concat(e_3));
                 throw new apollo_server_errors_1.UserInputError("Tunnus on jo k\u00E4yt\u00F6ss\u00E4");
             case 5:
                 con.end();
@@ -147,7 +147,7 @@ var getAliases = function (userId) { return __awaiter(void 0, void 0, void 0, fu
                 return [2 /*return*/, rows];
             case 4:
                 e_4 = _a.sent();
-                (0, logService_1.default)('UserService', 'error', "Ei voitu hakea aliakseia k\u00E4ytt\u00E4j\u00E4lle " + userId);
+                (0, logService_1.default)('UserService', 'error', "Ei voitu hakea aliakseia k\u00E4ytt\u00E4j\u00E4lle ".concat(userId));
                 return [3 /*break*/, 6];
             case 5:
                 con.end();
@@ -172,7 +172,7 @@ var addAlias = function (userId, alias) { return __awaiter(void 0, void 0, void 
                 return [2 /*return*/, result.insertId];
             case 4:
                 e_5 = _a.sent();
-                (0, logService_1.default)('UserService', 'error', "Aliasta ei voitu lis\u00E4t\u00E4 (" + userId + ", " + alias + "). Error: " + e_5);
+                (0, logService_1.default)('UserService', 'error', "Aliasta ei voitu lis\u00E4t\u00E4 (".concat(userId, ", ").concat(alias, "). Error: ").concat(e_5));
                 if (e_5.code === 'ER_DUP_ENTRY')
                     throw new apollo_server_errors_1.UserInputError('Alias on jo olemassa');
                 throw new Error('Mystinen virhe');
@@ -193,13 +193,13 @@ var deleteAlias = function (aliasId, userId) { return __awaiter(void 0, void 0, 
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 4, 5, 6]);
-                return [4 /*yield*/, con.query("DELETE from alias WHERE id = ? " + ((userId) ? 'AND user = ?' : ''), [aliasId, userId])];
+                return [4 /*yield*/, con.query("DELETE from alias WHERE id = ? ".concat((userId) ? 'AND user = ?' : ''), [aliasId, userId])];
             case 3:
                 res = (_a.sent())[0];
                 return [2 /*return*/, res.affectedRows];
             case 4:
                 e_6 = _a.sent();
-                (0, logService_1.default)('UserService', 'error', "Aliasta ei voitu poistaa (id: " + aliasId + "), " + e_6);
+                (0, logService_1.default)('UserService', 'error', "Aliasta ei voitu poistaa (id: ".concat(aliasId, "), ").concat(e_6));
                 throw Error('Aliasta ei voitu poistaa :P');
             case 5:
                 con.end();
@@ -223,7 +223,7 @@ var updateUser = function (passwordHash, email, userId) { return __awaiter(void 
                     vars.push(email);
                 if (passwordHash)
                     vars.push(passwordHash);
-                query = "\n        UPDATE user SET\n        " + ((email) ? 'email = ?' : '') + ((vars.length > 1) ? ',' : '') + "\n        " + ((passwordHash) ? 'passwordHash = ?' : '') + "\n        WHERE id = ?\n    ";
+                query = "\n        UPDATE user SET\n        ".concat((email) ? 'email = ?' : '').concat((vars.length > 1) ? ',' : '', "\n        ").concat((passwordHash) ? 'passwordHash = ?' : '', "\n        WHERE id = ?\n    ");
                 return [4 /*yield*/, con.query(query, __spreadArray(__spreadArray([], vars, true), [userId], false))];
             case 2:
                 res = (_a.sent())[0];

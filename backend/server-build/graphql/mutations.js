@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mutations = void 0;
-var bcrypt_1 = __importDefault(require("bcrypt"));
+var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var fs_1 = __importDefault(require("fs"));
 var stream_1 = require("stream");
@@ -59,7 +59,7 @@ exports.mutations = {
                     case 0:
                         if (!(0, validators_1.validString)(args.name) || !(0, validators_1.validString)(args.password))
                             throw new apollo_server_errors_1.UserInputError('Argumentit ei kelpaa...');
-                        return [4 /*yield*/, bcrypt_1.default.hash(args.password, 10)];
+                        return [4 /*yield*/, bcryptjs_1.default.hash(args.password, 10)];
                     case 1:
                         hashedPassoword = _a.sent();
                         return [4 /*yield*/, userService_1.default.addUser(args.name, args.email, hashedPassoword)];
@@ -89,7 +89,7 @@ exports.mutations = {
                         user = _b.sent();
                         _a = !user;
                         if (_a) return [3 /*break*/, 4];
-                        return [4 /*yield*/, bcrypt_1.default.compare(password, user.passwordHash)];
+                        return [4 /*yield*/, bcryptjs_1.default.compare(password, user.passwordHash)];
                     case 3:
                         _a = !(_b.sent());
                         _b.label = 4;
@@ -168,9 +168,9 @@ exports.mutations = {
                 return [2 /*return*/, args.file.then(function (file) {
                         var createReadStream = file.createReadStream, filename = file.filename, mimetype = file.mimetype;
                         var fileStream = createReadStream();
-                        fileStream.pipe(fs_1.default.createWriteStream("./upload/" + context.user.name + ".csv"));
+                        fileStream.pipe(fs_1.default.createWriteStream("./upload/".concat(context.user.name, ".csv")));
                         (0, stream_1.finished)(fileStream, function () {
-                            (0, csvParser_1.parseCsv)(context.user.name + ".csv", context.user.name);
+                            (0, csvParser_1.parseCsv)("".concat(context.user.name, ".csv"), context.user.name);
                         });
                         return file;
                     })];
@@ -197,7 +197,7 @@ exports.mutations = {
                         if (!((_b = context === null || context === void 0 ? void 0 : context.user) === null || _b === void 0 ? void 0 : _b.id))
                             throw new apollo_server_errors_1.AuthenticationError('Access denied');
                         if (!(args.password)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, bcrypt_1.default.hash(args.password, 10)];
+                        return [4 /*yield*/, bcryptjs_1.default.hash(args.password, 10)];
                     case 1:
                         _a = _c.sent();
                         return [3 /*break*/, 3];

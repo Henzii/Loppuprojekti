@@ -59,7 +59,7 @@ var writeSetup = function (variables) { return __awaiter(void 0, void 0, void 0,
             case 0: return [4 /*yield*/, (0, mySqlHelpers_1.makeConnection)()];
             case 1:
                 con = _a.sent();
-                query = "UPDATE setup SET" + Object.keys(variables).map(function (k) { return " " + k + " = ?"; });
+                query = "UPDATE setup SET".concat(Object.keys(variables).map(function (k) { return " ".concat(k, " = ?"); }));
                 return [4 /*yield*/, con.query(query, Object.values(variables))];
             case 2:
                 res = (_a.sent())[0];

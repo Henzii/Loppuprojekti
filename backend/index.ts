@@ -44,10 +44,12 @@ server.start().then(() => {
             res.sendFile(path.resolve(__dirname, '../frontend/build/index.html'));
     });
     server.applyMiddleware( { app, cors: false });
-    app.listen({ port: process.env.PORT || 4000 }, () => {
+    app.listen({ port: process.env.PORT || 8080 }, () => {
         console.log('Server running... maybe');
     });
-})
+}).catch((error) => {
+    console.log('Yhteyttä ei voida muodostaa!', error);
+});
 
 export interface reqWithUser extends express.Request {
     user: {

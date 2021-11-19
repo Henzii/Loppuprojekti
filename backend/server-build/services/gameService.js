@@ -80,11 +80,11 @@ var addGame = function (gameData, connection) {
                     if (!(_i < _b.length)) return [3 /*break*/, 12];
                     player = _b[_i];
                     // Lisätään yhden pelaajan tuloskortti tietokantaan
-                    return [4 /*yield*/, (connection === null || connection === void 0 ? void 0 : connection.query("INSERT INTO scorecard (user, game, course, playerName, total, hc) VALUES (\n            null,\n            " + gameid + ",\n            " + id + ",\n            '" + player.name + "',\n            " + player.total + ",\n            null);\n        "))];
+                    return [4 /*yield*/, (connection === null || connection === void 0 ? void 0 : connection.query("INSERT INTO scorecard (user, game, course, playerName, total, hc) VALUES (\n            null,\n            ".concat(gameid, ",\n            ").concat(id, ",\n            '").concat(player.name, "',\n            ").concat(player.total, ",\n            null);\n        ")))];
                 case 9:
                     // Lisätään yhden pelaajan tuloskortti tietokantaan
                     _c.sent();
-                    qry = "INSERT INTO score(scorecard, score, indeksi) VALUES\n            " + player.scores.map(function (s, i) { return "(last_insert_id(), " + s + ", " + (i + 1) + ")\n"; }) + "\n        ;";
+                    qry = "INSERT INTO score(scorecard, score, indeksi) VALUES\n            ".concat(player.scores.map(function (s, i) { return "(last_insert_id(), ".concat(s, ", ").concat(i + 1, ")\n"); }), "\n        ;");
                     return [4 /*yield*/, (connection === null || connection === void 0 ? void 0 : connection.query(qry))];
                 case 10:
                     _c.sent();

@@ -37,10 +37,10 @@ var server = new apollo_server_express_1.ApolloServer({
     },
 });
 server.start().then(function () {
-    app.use(express_1.default.static('../frontend/build/'));
+    app.use(express_1.default.static('../../frontend/build/'));
     app.get('*', function (req, res) {
         if (!req.path.startsWith('/graphql'))
-            res.sendFile(path_1.default.resolve(__dirname, '../frontend/build/index.html'));
+            res.sendFile(path_1.default.resolve(__dirname, '../../frontend/build/index.html'));
     });
     server.applyMiddleware({ app: app, cors: false });
     app.listen({ port: process.env.PORT || 8080 }, function () {

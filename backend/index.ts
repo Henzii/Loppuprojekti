@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server-express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import path from 'path';
 import express from 'express';
 import typeDefs from './graphql/typedefs';
 import resolvers from './graphql/resolvers';
@@ -37,6 +38,11 @@ const server = new ApolloServer({
     },
 })
 server.start().then(() => {
+    app.use(express.static('../frontend/build/'));
+    app.get('*', function (req, res) {
+        if (!req.path.startsWith('/graphql'))
+            res.sendFile(path.resolve(__dirname, '../frontend/build/index.html'));
+    });
     server.applyMiddleware( { app, cors: false });
     app.listen({ port: process.env.PORT || 4000 }, () => {
         console.log('Server running... maybe');

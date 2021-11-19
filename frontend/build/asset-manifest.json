@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.34221cfd.chunk.css",
+    "main.js": "/static/js/main.ef127000.chunk.js",
+    "main.js.map": "/static/js/main.ef127000.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.f5cfbed7.js",
+    "runtime-main.js.map": "/static/js/runtime-main.f5cfbed7.js.map",
+    "static/js/2.7e864d4c.chunk.js": "/static/js/2.7e864d4c.chunk.js",
+    "static/js/2.7e864d4c.chunk.js.map": "/static/js/2.7e864d4c.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.34221cfd.chunk.css.map": "/static/css/main.34221cfd.chunk.css.map",
+    "static/js/2.7e864d4c.chunk.js.LICENSE.txt": "/static/js/2.7e864d4c.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/risbee.524f74fb.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f5cfbed7.js",
+    "static/js/2.7e864d4c.chunk.js",
+    "static/css/main.34221cfd.chunk.css",
+    "static/js/main.ef127000.chunk.js"
+  ]
+}

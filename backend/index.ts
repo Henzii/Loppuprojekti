@@ -8,6 +8,7 @@ import resolvers from './graphql/resolvers';
 import jwt from 'jsonwebtoken';
 import { DecodedToken } from './types';
 import { graphqlUploadExpress } from 'graphql-upload';
+import { join } from 'path/posix';
 
 const app = express();
 
@@ -24,7 +25,7 @@ app.use(graphqlUploadExpress());
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ( { req }: { req: reqWithUser }) => {
+    context: ({ req }: { req: reqWithUser }) => {
         if (req.headers.cookie) {
             const [avain, token] = req.headers.cookie.split('=');
             if (avain === "suklaaKeksi") {
@@ -38,12 +39,12 @@ const server = new ApolloServer({
     },
 })
 server.start().then(() => {
-    app.use(express.static('../frontend/build/'));
+    app.use(express.static(path.join(__dirname, '../../frontend/build')));
     app.get('*', function (req, res) {
         if (!req.path.startsWith('/graphql'))
-            res.sendFile(path.resolve(__dirname, '../frontend/build/index.html'));
+            res.sendFile(path.resolve(__dirname, '../../frontend/build/index.html'));
     });
-    server.applyMiddleware( { app, cors: false });
+    server.applyMiddleware({ app, cors: false });
     app.listen({ port: process.env.PORT || 8080 }, () => {
         console.log('Server running... maybe');
     });

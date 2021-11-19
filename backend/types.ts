@@ -4,7 +4,7 @@ export interface User {
     email?: string,
     rooli: string,
     passwordHash: string,
-    active: boolean
+    active: number
 }
 
 export type RawCompetitionData = {

@@ -26,7 +26,7 @@ export const mutations = {
                 name: args.name,
                 email: args.email,
                 rooli: 'user',
-                active: false,
+                active: 0,
             }
             return newUser;
         },
@@ -36,8 +36,8 @@ export const mutations = {
                 throw new UserInputError('Väärä tunnus tai salasana')
             } else {
                 const user = await userService.getUser(name);
-                if (user?.active !== true) throw new AuthenticationError('Tunnusta ei ole aktivoitu!');
                 if (!user || !(await bcrypt.compare(password, user.passwordHash))) throw new UserInputError('Väärä tunnus tai salasana');
+                if (user.active !== 1) throw new AuthenticationError('Tunnusta ei ole aktivoitu!');
                 else {
                     const payload = {
                         id: user.id,

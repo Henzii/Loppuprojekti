@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var apollo_server_express_1 = require("apollo-server-express");
 var dotenv_1 = __importDefault(require("dotenv"));
 var cors_1 = __importDefault(require("cors"));
+var path_1 = __importDefault(require("path"));
 var express_1 = __importDefault(require("express"));
 var typedefs_1 = __importDefault(require("./graphql/typedefs"));
 var resolvers_1 = __importDefault(require("./graphql/resolvers"));
@@ -36,6 +37,11 @@ var server = new apollo_server_express_1.ApolloServer({
     },
 });
 server.start().then(function () {
+    app.use(express_1.default.static('../frontend/build/'));
+    app.get('*', function (req, res) {
+        if (!req.path.startsWith('/graphql'))
+            res.sendFile(path_1.default.resolve(__dirname, '../frontend/build/index.html'));
+    });
     server.applyMiddleware({ app: app, cors: false });
     app.listen({ port: process.env.PORT || 4000 }, function () {
         console.log('Server running... maybe');

@@ -16,7 +16,7 @@ var app = (0, express_1.default)();
 dotenv_1.default.config();
 var corsOptions = {
     credentials: true,
-    origin: 'http://localhost:3000'
+    origin: 'https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use((0, graphql_upload_1.graphqlUploadExpress)());

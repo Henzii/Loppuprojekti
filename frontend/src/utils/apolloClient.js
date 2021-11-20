@@ -6,8 +6,8 @@ const client = () => {
     const yhteys = new ApolloClient({
       cache: new InMemoryCache(),
       link: createUploadLink({
-        uri: 'https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com/graphql',
-        credentials: 'same-origin',
+        uri: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com:443/graphql',
+        credentials: 'include',
       }),
     });
     return yhteys;

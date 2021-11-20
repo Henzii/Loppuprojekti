@@ -43,7 +43,7 @@ const Frontpage = () => {
         <div className="darkContainer">
           <Typography variant="h3">Ei turvallinen!?</Typography>
           <Typography paragraph>
-            Voit huoletta ottaa foliohatun pois päästä. Kaikki &quot;arkaluontoinen&quot; data
+            Voit huoletta ottaa foliohatun pois päästä, sillä kaikki &quot;arkaluontoinen&quot; data
             (salasanat, tilastot yms.) kulkevat https-yhteyden kautta.
           </Typography>
           <Typography paragraph>
@@ -51,7 +51,7 @@ const Frontpage = () => {
             <a href="https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com/">
               &nbsp;salatulle sivulle&nbsp;
             </a>
-            , varsinkin kun Risbeegomfkerho on niin köyhä, ettei edes varmistettuun
+            , varsinkin kun Risbeegomfkerho on niin köyhä, ettei edes kunnolliseen
             sertifikaattiin ole varaa.
           </Typography>
         </div>

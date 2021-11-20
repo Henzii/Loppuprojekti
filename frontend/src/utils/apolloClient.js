@@ -7,7 +7,7 @@ const client = () => {
       cache: new InMemoryCache(),
       link: createUploadLink({
         uri: 'https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com/graphql',
-        credentials: 'include',
+        credentials: 'same-origin',
       }),
     });
     return yhteys;

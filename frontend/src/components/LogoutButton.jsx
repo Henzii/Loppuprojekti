@@ -11,7 +11,7 @@ const LogoutButton = () => {
     await client.clearStore();
     await client.resetStore();
     await client.refetchQueries({ include: [GET_ME] });
-    document.cookie = 'suklaaKeksi=; Max-Age=-99999999;';
+    window.sessionStorage.clear();
     logged.clear();
   };
   return (

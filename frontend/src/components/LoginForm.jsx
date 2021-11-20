@@ -22,7 +22,7 @@ function LoginForm() {
         },
       );
       window.scrollTo(0, 0);
-      document.cookie = `suklaaKeksi=${res.data.login}`;
+      window.sessionStorage.setItem('suklaaJuna', res.data.login);
       await client.refetchQueries({
         include: [GET_ME],
       });

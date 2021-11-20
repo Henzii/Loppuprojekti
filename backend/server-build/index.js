@@ -17,6 +17,7 @@ dotenv_1.default.config();
 var corsOptions = {
     credentials: true,
     origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
+    //origin: 'http://localhost:3000',
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use((0, graphql_upload_1.graphqlUploadExpress)());
@@ -25,16 +26,18 @@ var server = new apollo_server_express_1.ApolloServer({
     resolvers: resolvers_1.default,
     context: function (_a) {
         var req = _a.req;
-        if (req.headers.cookie) {
-            var _b = req.headers.cookie.split('='), avain = _b[0], token = _b[1];
-            if (avain === "suklaaKeksi") {
-                if (jsonwebtoken_1.default.verify(token, process.env.TOKEN_KEY)) {
-                    var user = jsonwebtoken_1.default.decode(token);
-                    return { user: user };
-                }
+        if (req.headers.authorization) {
+            var token = req.headers.authorization;
+            try {
+                jsonwebtoken_1.default.verify(token, process.env.TOKEN_KEY);
+                var user = jsonwebtoken_1.default.decode(token);
+                return { user: user };
+            }
+            catch (_b) {
+                return null;
             }
         }
-    },
+    }
 });
 server.start().then(function () {
     app.use(express_1.default.static(path_1.default.join(__dirname, '../../frontend/build')));

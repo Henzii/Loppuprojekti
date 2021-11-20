@@ -17,6 +17,7 @@ dotenv.config();
 const corsOptions = {
     credentials: true,
     origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
+    //origin: 'http://localhost:3000',
 };
 
 app.use(cors(corsOptions));
@@ -26,18 +27,19 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: ({ req }: { req: reqWithUser }) => {
-        if (req.headers.cookie) {
-            const [avain, token] = req.headers.cookie.split('=');
-            if (avain === "suklaaKeksi") {
-                if (jwt.verify(token, process.env.TOKEN_KEY as string)) {
-                    const user = jwt.decode(token) as DecodedToken;
-                    return { user };
-                }
+        if (req.headers.authorization) {
+            const token = req.headers.authorization;
+            try {
+                jwt.verify(token, process.env.TOKEN_KEY as string)
+                const user = jwt.decode(token) as DecodedToken;
+                return { user };
+            } catch {
+                return null;
             }
         }
-
-    },
+    }
 })
+
 server.start().then(() => {
     app.use(express.static(path.join(__dirname, '../../frontend/build')));
     app.get('*', function (req, res) {

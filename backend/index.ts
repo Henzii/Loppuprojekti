@@ -16,7 +16,7 @@ dotenv.config();
 
 const corsOptions = {
     credentials: true,
-    origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com:8080',
+    origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
 };
 
 app.use(cors(corsOptions));

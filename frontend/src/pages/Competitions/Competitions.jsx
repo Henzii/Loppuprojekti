@@ -14,6 +14,11 @@ const Competitions = () => {
   return (
     <Container>
       <Typography variant="h3">Kilpailut</Typography>
+      {(competitions.length < 1 && (
+        <Typography paragraph>
+          Ei yhtään kilpailua? Erotkaa ryhmästä välittömästi!
+        </Typography>
+      ))}
       {competitions.map((c) => <SingleCompetition competition={c} key={c.gameId} />)}
     </Container>
   );

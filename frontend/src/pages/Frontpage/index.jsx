@@ -41,12 +41,18 @@ const Frontpage = () => {
       </div>
       <div className="wideContainer splitContainer" id="login">
         <div className="darkContainer">
-          <Typography paragraph style={{ margin: '20% 30%' }}>
-            <i>
-              &quot;Hauki on kala!&quot;
-            </i>
-            <br />
-            &nbsp; - Antti S.
+          <Typography variant="h3">Ei turvallinen!?</Typography>
+          <Typography paragraph>
+            Voit huoletta ottaa foliohatun pois päästä. Kaikki &quot;arkaluontoinen&quot; data
+            (salasanat, tilastot yms.) kulkevat https-yhteyden kautta.
+          </Typography>
+          <Typography paragraph>
+            Koska sovellus jo toimitettiin Teille salaamattomana, on turha enää siirtyä
+            <a href="https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com/">
+              &nbsp;salatulle sivulle&nbsp;
+            </a>
+            , varsinkin kun Risbeegomfkerho on niin köyhä, ettei edes varmistettuun
+            sertifikaattiin ole varaa.
           </Typography>
         </div>
         <div>

@@ -35,10 +35,11 @@ const Frontpage = () => {
           Olet eksynyt Risbeegomfkerhon sivuille.
         </Typography>
         <Typography paragraph>
-          Omistatko jo tunnukset?&nbsp;
-          <a href="#login">Kirjaudu sisään!</a>
-          Etkö omista tunnuksia?&nbsp;
-          <a href="#luoTunnus">Luo tunnukset!</a>
+          Voit
+          <a href="#login">kirjautua sisään</a>
+          &nbsp;tai&nbsp;
+          <a href="#luoTunnus">luoda tunnukset</a>
+          .
         </Typography>
       </div>
       <div className="wideContainer splitContainer">
@@ -48,8 +49,8 @@ const Frontpage = () => {
             Voit huoletta ottaa foliohatun pois päästä, sillä kaikki &quot;arkaluontoinen&quot; data
             (salasanat, tilastot yms.) kulkevat https-yhteyden kautta.
           </Typography>
-          Risbeegomfkerho on niin köyhä, ettei edes kunnolliseen
           <Typography paragraph>
+            Risbeegomfkerho on niin köyhä, ettei edes kunnolliseen
             <a href="https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com/">
               &nbsp;sertifikaattiin&nbsp;
             </a>

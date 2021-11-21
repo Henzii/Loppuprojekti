@@ -9,7 +9,8 @@
     "ts-node": "ts-node",
     "parse": "ts-node-dev parse.ts",
     "dev": "ts-node-dev index.ts",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "DEVbuild": "tsc --outDir ../server-build/"
   },
   "author": "",
   "license": "ISC",

@@ -37,25 +37,26 @@ const Frontpage = () => {
         <Typography paragraph>
           Omistatko jo tunnukset?&nbsp;
           <a href="#login">Kirjaudu sisään!</a>
+          Etkö omista tunnuksia?&nbsp;
+          <a href="#luoTunnus">Luo tunnukset!</a>
         </Typography>
       </div>
-      <div className="wideContainer splitContainer" id="login">
+      <div className="wideContainer splitContainer">
         <div className="darkContainer">
           <Typography variant="h3">Ei turvallinen!?</Typography>
           <Typography paragraph>
             Voit huoletta ottaa foliohatun pois päästä, sillä kaikki &quot;arkaluontoinen&quot; data
             (salasanat, tilastot yms.) kulkevat https-yhteyden kautta.
           </Typography>
+          Risbeegomfkerho on niin köyhä, ettei edes kunnolliseen
           <Typography paragraph>
-            Koska sovellus jo toimitettiin Teille salaamattomana, on turha enää siirtyä
             <a href="https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com/">
-              &nbsp;salatulle sivulle&nbsp;
+              &nbsp;sertifikaattiin&nbsp;
             </a>
-            , varsinkin kun Risbeegomfkerho on niin köyhä, ettei edes kunnolliseen
-            sertifikaattiin ole varaa.
+            ole varaa.
           </Typography>
         </div>
-        <div>
+        <div id="login">
           <Typography variant="h3">Kirjaudu sisään</Typography>
           <Typography paragraph>
             Syötä tunnuksesi ja salasanasi alla oleviin kenttiin kirjautuaksesi sisään.
@@ -63,7 +64,7 @@ const Frontpage = () => {
           <LoginForm />
         </div>
       </div>
-      <div className="wideContainer">
+      <div className="wideContainer" id="luoTunnus">
         <Typography variant="h3">Luo tunnuket</Typography>
         <Typography paragraph>
           Luo tunnukset täyttämällä alla oleva lomake. Sähköpostiosoite ei ole pakollinen.

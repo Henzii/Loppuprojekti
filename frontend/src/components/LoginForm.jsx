@@ -27,7 +27,7 @@ function LoginForm() {
         include: [GET_ME],
       });
     } catch (error) {
-      enqueueSnackbar('Väärä tunnus tai salasana!', { variant: 'error' });
+      enqueueSnackbar(`Väärä tunnus tai salasana (${error})`, { variant: 'error' });
     } finally {
       e.target.tunnus.value = '';
       e.target.password.value = '';

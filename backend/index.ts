@@ -16,8 +16,8 @@ dotenv.config();
 
 const corsOptions = {
     credentials: true,
-    origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
-    // origin: 'http://localhost:3000',
+    //origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
+    origin: 'http://localhost:3000',
 };
 
 app.use(cors(corsOptions));
@@ -48,7 +48,7 @@ server.start().then(() => {
     });
     server.applyMiddleware({ app, cors: false });
     app.listen({ port: process.env.PORT || 8080 }, () => {
-        console.log('Server running... maybe');
+        console.log('Server running...');
     });
 }).catch((error) => {
     console.log('Yhteyttä ei voida muodostaa!', error);

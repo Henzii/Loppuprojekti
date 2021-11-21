@@ -15,8 +15,9 @@ const authLink = setContext((_, { headers }) => {
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: authLink.concat(createUploadLink({
-    uri: 'https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com/graphql',
-    credentials: 'include',
+    uri: (process.env.NODE_ENV === 'development')
+      ? 'http://localhost:8080/graphql'
+      : 'https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com/graphql',
   })),
 });
 

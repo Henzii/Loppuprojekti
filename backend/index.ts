@@ -8,19 +8,16 @@ import resolvers from './graphql/resolvers';
 import jwt from 'jsonwebtoken';
 import { DecodedToken } from './types';
 import { graphqlUploadExpress } from 'graphql-upload';
-import { join } from 'path/posix';
 
 const app = express();
 
 dotenv.config();
 
-const corsOptions = {
-    credentials: true,
+/*const corsOptions = {
     //origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
     origin: 'http://localhost:3000',
-};
+};*/
 
-app.use(cors(corsOptions));
 app.use(graphqlUploadExpress());
 
 const server = new ApolloServer({
@@ -41,6 +38,7 @@ const server = new ApolloServer({
 })
 
 server.start().then(() => {
+    app.use(cors());
     app.use(express.static(path.join(__dirname, '../../frontend/build')));
     app.get('*', function (req, res) {
         if (!req.path.startsWith('/graphql'))

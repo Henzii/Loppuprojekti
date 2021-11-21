@@ -35,7 +35,7 @@ const Frontpage = () => {
           Olet eksynyt Risbeegomfkerhon sivuille.
         </Typography>
         <Typography paragraph>
-          Voit
+          Voit&nbsp;
           <a href="#login">kirjautua sisään</a>
           &nbsp;tai&nbsp;
           <a href="#luoTunnus">luoda tunnukset</a>

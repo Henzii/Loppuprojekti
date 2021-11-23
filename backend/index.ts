@@ -36,7 +36,7 @@ server.start().then(() => {
     app.use(cors({
         origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
     }));
-    app.use(express.static(path.join(__dirname, '../client/build')));
+    app.use(express.static(path.join(__dirname, '../client/')));
     app.get('*', function (req, res) {
         if (!req.path.startsWith('/graphql'))
             res.sendFile(path.resolve(__dirname, '../client/index.html'));

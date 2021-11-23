@@ -13,6 +13,9 @@ const NaviLinkit = ({ Wrap }) => (
       <AppBarLink to="/upload" Wrap={Wrap} text="Upload" />
       <AppBarLink to="/logs" Wrap={Wrap} text="Logs" />
     </HideIfNotLogged>
+    <HideIfNotLogged rooli="admin">
+      <AppBarLink to="/admin" Wrap={Wrap} text="Admin" />
+    </HideIfNotLogged>
   </>
 );
 

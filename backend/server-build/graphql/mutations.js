@@ -191,13 +191,21 @@ exports.mutations = {
             });
         }); },
         updateUser: function (_root, args, context) { return __awaiter(void 0, void 0, void 0, function () {
-            var pwHash, _a, res;
+            var id, pwHash, _a, res;
             var _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
                         if (!((_b = context === null || context === void 0 ? void 0 : context.user) === null || _b === void 0 ? void 0 : _b.id))
                             throw new apollo_server_errors_1.AuthenticationError('Access denied');
+                        if ((args.rooli || args.userId) && context.user.rooli !== 'admin')
+                            throw new apollo_server_errors_1.AuthenticationError('Access denied');
+                        id = context.user.id;
+                        if (args.userId) {
+                            id = parseInt(args.userId);
+                            if (!(0, validators_1.validInt)(id))
+                                throw new Error('Virheellinen id-argumentti');
+                        }
                         if (!(args.password)) return [3 /*break*/, 2];
                         return [4 /*yield*/, bcryptjs_1.default.hash(args.password, 10)];
                     case 1:
@@ -208,7 +216,7 @@ exports.mutations = {
                         _c.label = 3;
                     case 3:
                         pwHash = _a;
-                        return [4 /*yield*/, userService_1.default.updateUser(pwHash, args.email, context.user.id)];
+                        return [4 /*yield*/, userService_1.default.updateUser(pwHash, args.email, id, args.rooli)];
                     case 4:
                         res = _c.sent();
                         return [2 /*return*/, res];
@@ -229,6 +237,21 @@ exports.mutations = {
                         return [2 /*return*/, res];
                 }
             });
-        }); }
+        }); },
+        deleteUser: function (_root, args, context) { return __awaiter(void 0, void 0, void 0, function () {
+            var res;
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        if (((_a = context.user) === null || _a === void 0 ? void 0 : _a.rooli) !== 'admin')
+                            throw new apollo_server_errors_1.AuthenticationError('Access denied');
+                        return [4 /*yield*/, userService_1.default.deleteUser(args.userId)];
+                    case 1:
+                        res = _b.sent();
+                        return [2 /*return*/, res];
+                }
+            });
+        }); },
     },
 };

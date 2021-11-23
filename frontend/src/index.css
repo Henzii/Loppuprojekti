@@ -19,6 +19,16 @@ body::before {
   position: fixed;
   z-index: -1;   
 }
+.warningFrame {
+  border: 15px solid red;
+  border-radius: 15px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  animation: warningAnim 2s infinite ease-in-out;
+}
 .wideContainer {
   width: 100%;
   background-color: rgba(30,30,30,0.4);
@@ -88,6 +98,20 @@ a {
 }
 .largeFont {
   font-size: 1.1em;
+}
+@keyframes warningAnim {
+  0% {
+    border-color: rgba(255,0,0,1);
+    background-color: rgba(255,0,0,.1);
+  }
+  50% {
+    border-color:rgba(255,0,0,0.2);
+    background-color: rgba(255,0,0,0);
+  }
+  100% {
+    border-color: rgba(255,0,0,1);
+    background-color: rgba(255,0,0,.1);
+  }
 }
 @keyframes errori {
   0% { 

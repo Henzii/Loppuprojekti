@@ -10,7 +10,7 @@ import userService from "../services/userService";
 import gameService from '../services/gameService';
 import setupService from '../services/setupService';
 
-import { validString } from "../utils/validators";
+import { validInt, validString } from "../utils/validators";
 
 import { DecodedToken, MutationAddGameArgs, SafeUser, ContextUserToken } from '../types';
 
@@ -94,17 +94,31 @@ export const mutations = {
             if (context.user?.rooli !== 'admin') throw new AuthenticationError('Access denied');
             return await setupService.writeSetup(args);
         },
-        updateUser: async (_root: unknown, args: { email?: string, password?: string }, context: ContextUserToken) => {
+        updateUser: async (_root: unknown, args: { email?: string, password?: string, rooli?: string, userId?: string }, context: ContextUserToken) => {
             if (!context?.user?.id) throw new AuthenticationError('Access denied');
+            if ((args.rooli || args.userId) && context.user.rooli !== 'admin') throw new AuthenticationError('Access denied');
+
+            let id = context.user.id;
+
+            if (args.userId) {
+                id = parseInt(args.userId)
+                if (!validInt(id)) throw new Error('Virheellinen id-argumentti');
+            }
+
             const pwHash = (args.password) ? await bcrypt.hash(args.password, 10) : undefined;
-            const res = await userService.updateUser(pwHash, args.email, context.user.id);
+            const res = await userService.updateUser(pwHash, args.email, id, args.rooli);
             return res;
         },
         activateUser: async (_root: unknown, args: { userId: number }, context: ContextUserToken) => {
             if (context.user?.rooli !== 'admin') throw new AuthenticationError('Access denied');
             const res = await userService.activateUser(args.userId);
             return res;
-        }
+        },
+        deleteUser: async (_root: unknown, args: { userId: number }, context: ContextUserToken) => {
+            if (context.user?.rooli !== 'admin') throw new AuthenticationError('Access denied');
+            const res = await userService.deleteUser(args.userId);
+            return res;
+        },
     },
 }
 

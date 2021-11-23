@@ -93,8 +93,9 @@ const typeDefs = gql`
 
         uploadCsvFile(file: Upload!): File!
 
-        updateUser(email: String, password: String): String
+        updateUser(email: String, password: String, rooli: String, userId: ID): String
         activateUser(userId: ID!): String
+        deleteUser(userId: ID!): String
 
         setSetup(
             minPlayersForMatch: Int,

@@ -14,10 +14,6 @@ var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var graphql_upload_1 = require("graphql-upload");
 var app = (0, express_1.default)();
 dotenv_1.default.config();
-/*const corsOptions = {
-    //origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
-    origin: 'http://localhost:3000',
-};*/
 app.use((0, graphql_upload_1.graphqlUploadExpress)());
 var server = new apollo_server_express_1.ApolloServer({
     typeDefs: typedefs_1.default,
@@ -38,7 +34,9 @@ var server = new apollo_server_express_1.ApolloServer({
     }
 });
 server.start().then(function () {
-    app.use((0, cors_1.default)());
+    app.use((0, cors_1.default)({
+        origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
+    }));
     app.use(express_1.default.static(path_1.default.join(__dirname, '../../frontend/build')));
     app.get('*', function (req, res) {
         if (!req.path.startsWith('/graphql'))

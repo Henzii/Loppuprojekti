@@ -34,3 +34,13 @@ query {
   }
 }
 `;
+export const GET_USER = gql`
+query ($id: Int, $name: String) {
+  getUser(id: $id, name: $name) {
+    id
+    name
+    email
+    rooli
+  }
+}
+`;

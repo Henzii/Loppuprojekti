@@ -193,7 +193,7 @@ var deleteAlias = function (aliasId, userId) { return __awaiter(void 0, void 0, 
                 _a.label = 2;
             case 2:
                 _a.trys.push([2, 4, 5, 6]);
-                return [4 /*yield*/, con.query("DELETE from alias WHERE id = ? ".concat((userId) ? 'AND user = ?' : ''), [aliasId, userId])];
+                return [4 /*yield*/, con.query("DELETE from alias WHERE id = ? ".concat((userId) ? 'AND user = ?' : ''), [aliasId])];
             case 3:
                 res = (_a.sent())[0];
                 return [2 /*return*/, res.affectedRows];
@@ -208,23 +208,27 @@ var deleteAlias = function (aliasId, userId) { return __awaiter(void 0, void 0, 
         }
     });
 }); };
-var updateUser = function (passwordHash, email, userId) { return __awaiter(void 0, void 0, void 0, function () {
+var updateUser = function (passwordHash, email, userId, rooli) { return __awaiter(void 0, void 0, void 0, function () {
     var con, vars, query, res;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!passwordHash && !email)
+                if (!passwordHash && !email && !rooli)
                     throw new Error('Antaisit edes yhden parametrin');
                 return [4 /*yield*/, (0, mySqlHelpers_1.makeConnection)()];
             case 1:
                 con = _a.sent();
                 vars = [];
-                if (email)
-                    vars.push(email);
+                // Lisätään annetut parametrit vars-muuttujaan
                 if (passwordHash)
-                    vars.push(passwordHash);
-                query = "\n        UPDATE user SET\n        ".concat((email) ? 'email = ?' : '').concat((vars.length > 1) ? ',' : '', "\n        ").concat((passwordHash) ? 'passwordHash = ?' : '', "\n        WHERE id = ?\n    ");
-                return [4 /*yield*/, con.query(query, __spreadArray(__spreadArray([], vars, true), [userId], false))];
+                    vars['passwordHash'] = passwordHash;
+                if (email)
+                    vars['email'] = email;
+                if (rooli)
+                    vars['rooli'] = rooli;
+                query = "\n        UPDATE user SET\n        ".concat(Object.keys(vars).map(function (k) { return k + ' = ?'; }).join(', '), "\n        WHERE id = ?\n    ");
+                console.log('Updating user: ', query, 'arvot: ', vars);
+                return [4 /*yield*/, con.query(query, __spreadArray(__spreadArray([], Object.values(vars), true), [userId], false))];
             case 2:
                 res = (_a.sent())[0];
                 con.end();
@@ -243,8 +247,35 @@ var activateUser = function (userId) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, con.query(query, userId)];
             case 2:
                 res = (_a.sent())[0];
+                con.end();
                 return [2 /*return*/, res.affectedRows];
         }
     });
 }); };
-exports.default = { getAllUsers: getAllUsers, addUser: addUser, getUser: getUser, getAliases: getAliases, addAlias: addAlias, deleteAlias: deleteAlias, updateUser: updateUser, activateUser: activateUser };
+var deleteUser = function (userId) { return __awaiter(void 0, void 0, void 0, function () {
+    var con, query, res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, (0, mySqlHelpers_1.makeConnection)()];
+            case 1:
+                con = _a.sent();
+                query = "\n        DELETE FROM user\n        WHERE id = ?\n    ";
+                return [4 /*yield*/, con.query(query, userId)];
+            case 2:
+                res = (_a.sent())[0];
+                con.end();
+                return [2 /*return*/, res.affectedRows];
+        }
+    });
+}); };
+exports.default = {
+    getAllUsers: getAllUsers,
+    addUser: addUser,
+    getUser: getUser,
+    getAliases: getAliases,
+    addAlias: addAlias,
+    deleteAlias: deleteAlias,
+    updateUser: updateUser,
+    activateUser: activateUser,
+    deleteUser: deleteUser,
+};

@@ -11,6 +11,7 @@ import Stats from './pages/Stats/Stats';
 import UploadCsv from './components/UploadCsv';
 import Settings from './pages/Settings/Settings';
 import Competitions from './pages/Competitions/Competitions';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/upload" element={<UploadCsv />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/logs" element={<ReadLogs />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Particles
         options={{

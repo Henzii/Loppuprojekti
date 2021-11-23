@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const UPDATE_USER = gql`
-  mutation($email: String, $password: String) {
-    updateUser(email: $email, password: $password)
+  mutation($email: String, $password: String, $userId: ID) {
+    updateUser(email: $email, password: $password, userId: $userId)
   }
 `;
 export const ACTIVATE_USER = gql`
@@ -38,7 +38,11 @@ export const CREATE_USER = gql`
     }
   }
 `;
-
+export const DELETE_USER = gql`
+mutation ($userId: ID!) {
+  deleteUser(userId: $userId)
+}
+`;
 export const LOGIN = gql`
 mutation($name: String!, $password: String!) {
   login(name: $name, password: $password)
@@ -46,8 +50,8 @@ mutation($name: String!, $password: String!) {
 }
 `;
 export const ADD_ALIAS = gql`
-mutation ($alias: String!) {
-  addAlias(alias: $alias)
+mutation ($alias: String!, $userId: ID) {
+  addAlias(alias: $alias, userId: $userId)
 }
 `;
 export const DELETE_ALIAS = gql`
@@ -93,8 +97,8 @@ query {
 }
 `;
 export const GET_ALIASES = gql`
-query {
-  getAliases {
+query ($userId: ID) {
+  getAliases (userId: $userId ) {
     id
     alias
   }

@@ -1,35 +1,27 @@
+/* eslint-disable no-unused-vars */
 import {
-  TextField, Typography, Button, Grid, Backdrop, CircularProgress,
+  Button,
+  Grid,
+  Typography,
 } from '@mui/material';
+import { Formik, Field, Form } from 'formik';
 import { useMutation } from '@apollo/client';
-import React, { useState } from 'react';
+import React from 'react';
 import { useSnackbar } from 'notistack';
 import { CREATE_USER } from '../graphql/mutations';
+import FormikField from './FormikField';
 
 function CreateAccount() {
   const [createUser, createUserData] = useMutation(CREATE_USER);
   const { enqueueSnackbar } = useSnackbar();
-  const [tunnukset, setTunnukset] = useState({
-    tunnus: '',
-    password: '',
-    password2: '',
-    email: '',
-    valid: false,
-  });
 
-  const handleFieldChange = (e) => {
-    const newTunnus = { ...tunnukset, [e.target.name]: e.target.value };
-    newTunnus.valid = (newTunnus.tunnus !== '' && newTunnus.password !== '' && newTunnus.password === newTunnus.password2);
-    setTunnukset(newTunnus);
-  };
-  const handleCreation = async (e) => {
-    e.preventDefault();
+  const handleCreation = async ({ tunnus, password, email }) => {
     try {
       await createUser({
         variables: {
-          name: tunnukset.tunnus,
-          password: tunnukset.password,
-          email: tunnukset.email,
+          name: tunnus,
+          password,
+          email,
         },
       });
       enqueueSnackbar('Tunnus luotiin onnistuneesti!', { variant: 'success' });
@@ -38,13 +30,6 @@ function CreateAccount() {
     }
   };
 
-  if (createUserData.loading) {
-    return (
-      <Backdrop open>
-        <CircularProgress />
-      </Backdrop>
-    );
-  }
   if (createUserData.data?.addUser.id) {
     return (
       <>
@@ -56,39 +41,39 @@ function CreateAccount() {
     );
   }
   return (
-    <>
-      {
-        (createUserData.error
-          && (
-            <div className="div-error">
-              Virhe tunnuksen luomisessa! (
-              {createUserData.error.message}
-              )
-            </div>
-          )
-        )
-      }
-      <form onSubmit={handleCreation}>
-        <Grid container spacing={1} alignItems="center" columns={5}>
-          <Grid item md={1} xs={3}>Tunnus:</Grid>
-          <Grid item md={4} xs={3}>
-            <TextField name="tunnus" style={{ minWidth: '50%' }} required onChange={handleFieldChange} />
-          </Grid>
-          <Grid item md={1} xs={3}>Salasana:</Grid>
-          <Grid item md={4} xs={3}><TextField style={{ minWidth: '50%' }} name="password" required type="password" onChange={handleFieldChange} /></Grid>
-          <Grid item md={1} xs={3}>Vahvista salasana:</Grid>
-          <Grid item md={4} xs={3}><TextField style={{ minWidth: '50%' }} name="password2" required type="password" onChange={handleFieldChange} /></Grid>
-          <Grid item md={1} xs={3}>Email:</Grid>
-          <Grid item md={4} xs={3}><TextField style={{ minWidth: '50%' }} name="email" placeholder="Iimeil" onChange={handleFieldChange} /></Grid>
-          <Grid item md={5} xs={3}>
-            <Button size="large" variant="contained" disabled={!tunnukset.valid} type="submit">
-              Luo tunnukset
-            </Button>
-          </Grid>
+    <Formik
+      initialValues={{
+        tunnus: '', password: '', password2: '', email: '',
+      }}
+      onSubmit={(values) => handleCreation(values)}
+      validateOnChange={false}
+      validate={(values) => {
+        const errorit = {};
+        if (values.password !== values.password2) {
+          errorit.password2 = 'Salasanat ei täsmää!';
+        } else if (values.password.length < 5) {
+          errorit.password = 'Hey ainakin 5 merkkiä pitkä salasana dänks';
+        }
+        if (values.tunnus.length <= 3) {
+          errorit.tunnus = 'Liian lyhyt tunnus';
+        }
+        return errorit;
+      }}
+    >
+      <Form>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={6}>Tunnus:</Grid>
+          <Grid item xs={12} md={6}><Field name="tunnus" component={FormikField} placeholder="Tunnus..." /></Grid>
+          <Grid item xs={12} md={6}>Salasana:</Grid>
+          <Grid item xs={12} md={6}><Field name="password" component={FormikField} type="password" placeholder="Salasana..." /></Grid>
+          <Grid item xs={12} md={6}>Vahvista salasana:</Grid>
+          <Grid item xs={12} md={6}><Field name="password2" component={FormikField} type="password" placeholder="Vahvista salasana" /></Grid>
+          <Grid item xs={12} md={6}>Sähköposti:</Grid>
+          <Grid item xs={12} md={6}><Field name="email" component={FormikField} type="email" placeholder="Sähköposti" /></Grid>
+          <Grid item xs={12} md={6}><Button type="submit">Luo</Button></Grid>
         </Grid>
-
-      </form>
-    </>
+      </Form>
+    </Formik>
   );
 }
 export default CreateAccount;

@@ -7,8 +7,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PropTypes from 'prop-types';
 import useAliases from '../hooks/useAliases';
 
-const Aliases = () => {
-  const { aliakset, addAlias, deleteAlias } = useAliases();
+const Aliases = ({ userId }) => {
+  const { aliakset, addAlias, deleteAlias } = useAliases(userId);
   const { enqueueSnackbar } = useSnackbar();
 
   const handleAddAlias = async (e) => {
@@ -60,6 +60,12 @@ const SingleAlias = ({ alias, del }) => (
 SingleAlias.propTypes = {
   alias: PropTypes.shape().isRequired,
   del: PropTypes.func.isRequired,
+};
+Aliases.propTypes = {
+  userId: PropTypes.string,
+};
+Aliases.defaultProps = {
+  userId: null,
 };
 
 export default Aliases;

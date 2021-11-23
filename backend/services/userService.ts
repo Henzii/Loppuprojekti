@@ -5,7 +5,7 @@ import { User } from '../types';
 import log from './logService';
 import { MysqlError } from 'mysql';
 
-const getAllUsers = async ( active: boolean | undefined = undefined): Promise<User[] | []> => {
+const getAllUsers = async (active: boolean | undefined = undefined): Promise<User[] | []> => {
 
     const con = await makeConnection();
 
@@ -79,7 +79,7 @@ const addAlias = async (userId: number, alias: string) => {
 const deleteAlias = async (aliasId: number, userId: number | undefined) => {
     const con = await makeConnection();
     try {
-        const [res] = await con.query(`DELETE from alias WHERE id = ? ${(userId) ? 'AND user = ?' : ''}`, [aliasId, userId]) as mysql.ResultSetHeader[];
+        const [res] = await con.query(`DELETE from alias WHERE id = ? ${(userId) ? 'AND user = ?' : ''}`, [aliasId]) as mysql.ResultSetHeader[];
         return res.affectedRows;
     } catch (e) {
         log('UserService', 'error', `Aliasta ei voitu poistaa (id: ${aliasId}), ${e}`);
@@ -88,23 +88,28 @@ const deleteAlias = async (aliasId: number, userId: number | undefined) => {
         con.end();
     }
 }
-const updateUser = async (passwordHash: string | undefined, email: string | undefined, userId: number) => {
-    if (!passwordHash && !email) throw new Error('Antaisit edes yhden parametrin');
+const updateUser = async (passwordHash: string | undefined, email: string | undefined, userId: number, rooli: string | undefined) => {
+    if (!passwordHash && !email && !rooli) throw new Error('Antaisit edes yhden parametrin');
     const con = await makeConnection();
-    const vars = [];
-    if (email) vars.push(email);
-    if (passwordHash) vars.push(passwordHash);
+    const vars: any = [];
+
+    // Lisätään annetut parametrit vars-muuttujaan
+    if (passwordHash) vars['passwordHash'] = passwordHash;
+    if (email) vars['email'] = email;
+    if (rooli) vars['rooli'] = rooli;
+
+    // Luodaan mysqlquery
     const query = `
         UPDATE user SET
-        ${(email) ? 'email = ?' : ''}${(vars.length > 1) ? ',' : ''}
-        ${(passwordHash) ? 'passwordHash = ?' : ''}
+        ${Object.keys(vars).map(k => k + ' = ?').join(', ')}
         WHERE id = ?
     `;
-    const [res] = await con.query(query, [...vars, userId]) as mysql.ResultSetHeader[];
+    console.log('Updating user: ', query, 'arvot: ', vars);
+    const [res] = await con.query(query, [...Object.values(vars), userId]) as mysql.ResultSetHeader[];
     con.end();
     return res.changedRows;
 }
-const activateUser = async( userId: number ) => {
+const activateUser = async (userId: number) => {
     const con = await makeConnection();
     const query = `
         UPDATE user SET
@@ -112,6 +117,23 @@ const activateUser = async( userId: number ) => {
         WHERE id = ?
     `;
     const [res] = await con.query(query, userId) as mysql.ResultSetHeader[];
+    con.end();
     return res.affectedRows;
 }
-export default { getAllUsers, addUser, getUser, getAliases, addAlias, deleteAlias, updateUser, activateUser}
+const deleteUser = async (userId: number) => {
+    const con = await makeConnection();
+
+    // Ei poista jos on aliaksia.
+    const query = `
+        DELETE FROM user
+        WHERE id = ?
+    `;
+    const [res] = await con.query(query, userId) as mysql.ResultSetHeader[];
+    con.end();
+    return res.affectedRows;
+}
+export default {
+    getAllUsers, addUser, getUser, getAliases,
+    addAlias, deleteAlias, updateUser, activateUser,
+    deleteUser,
+}

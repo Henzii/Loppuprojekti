@@ -58,7 +58,12 @@ export const mutations = {
             }
         },
         addAlias: async (_root: unknown, args: { alias: string, userId: number }, context: { user: DecodedToken }) => {
+            // Jos ei kirjautunut sisään
+            if (!context.user) throw new AuthenticationError('Access denied');
+            
+            // Vain admin voi antaa userId-argumentin
             if (args.userId && context.user.rooli !== 'admin') throw new AuthenticationError('Access denied');
+            
             if (!args.alias) throw new UserInputError('What alias?');
             const userId = args.userId || context.user.id;
             try {
@@ -72,7 +77,9 @@ export const mutations = {
             let userId: number | undefined = context.user.id;
 
             if (context.user.rooli === 'admin') userId = undefined;
-
+            // Jos userId annettu, tulee sen täsmätä deleteAliaksessa aliasId:hen.
+            // => admin voi muokata kaikkien aliaksia
+            
             const poistetut = await userService.deleteAlias(args.aliasId, userId);
             if (poistetut > 0)
                 return true;

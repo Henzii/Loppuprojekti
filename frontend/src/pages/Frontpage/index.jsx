@@ -44,17 +44,8 @@ const Frontpage = () => {
       </div>
       <div className="wideContainer splitContainer">
         <div className="darkContainer">
-          <Typography variant="h3">Ei turvallinen!?</Typography>
-          <Typography paragraph>
-            Voit huoletta ottaa foliohatun pois päästä, sillä kaikki &quot;arkaluontoinen&quot; data
-            (salasanat, tilastot yms.) kulkevat https-yhteyden kautta.
-          </Typography>
-          <Typography paragraph>
-            Risbeegomfkerho on niin köyhä, ettei edes kunnolliseen
-            <a href="https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com/">
-              &nbsp;sertifikaattiin&nbsp;
-            </a>
-            ole varaa.
+          <Typography paragraph align="center">
+            <i>&quot;Hauki on kala&quot;</i>
           </Typography>
         </div>
         <div id="login">

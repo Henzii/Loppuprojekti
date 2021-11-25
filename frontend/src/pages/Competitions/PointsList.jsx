@@ -29,12 +29,14 @@ const PointsList = ({ competitions }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {Object.keys(pisteTaulu).map((key) => (
-          <TableRow>
-            <TableCell>{key}</TableCell>
-            <TableCell>{pisteTaulu[key]}</TableCell>
-          </TableRow>
-        ))}
+        {Object.keys(pisteTaulu)
+          .sort((a, b) => pisteTaulu[b] - pisteTaulu[a])
+          .map((key) => (
+            <TableRow>
+              <TableCell>{key}</TableCell>
+              <TableCell>{pisteTaulu[key]}</TableCell>
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   );

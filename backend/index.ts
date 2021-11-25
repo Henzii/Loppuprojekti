@@ -33,8 +33,9 @@ const server = new ApolloServer({
 })
 
 server.start().then(() => {
+    const portti = process.env.PORT || 8080;
     app.use(cors({
-        origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
+//        origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
     }));
     app.use(express.static(path.join(__dirname, '../client/')));
     app.get('*', function (req, res) {
@@ -42,8 +43,8 @@ server.start().then(() => {
             res.sendFile(path.resolve(__dirname, '../client/index.html'));
     });
     server.applyMiddleware({ app, cors: false });
-    app.listen({ port: process.env.PORT || 8080 }, () => {
-        console.log('Server running...');
+    app.listen({ port: portti }, () => {
+        console.log(`Serveri pyörii portissa ${portti}...`);
     });
 }).catch((error) => {
     console.log('Yhteyttä ei voida muodostaa!', error);

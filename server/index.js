@@ -34,6 +34,7 @@ var server = new apollo_server_express_1.ApolloServer({
     }
 });
 server.start().then(function () {
+    var portti = process.env.PORT || 8080;
     app.use((0, cors_1.default)({
         origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
     }));
@@ -43,8 +44,8 @@ server.start().then(function () {
             res.sendFile(path_1.default.resolve(__dirname, '../client/index.html'));
     });
     server.applyMiddleware({ app: app, cors: false });
-    app.listen({ port: process.env.PORT || 8080 }, function () {
-        console.log('Server running...');
+    app.listen({ port: portti }, function () {
+        console.log("Serveri py\u00F6rii portissa ".concat(portti, "..."));
     });
 }).catch(function (error) {
     console.log('Yhteyttä ei voida muodostaa!', error);

@@ -128,6 +128,10 @@ exports.mutations = {
         addAlias: function (_root, args, context) { return __awaiter(void 0, void 0, void 0, function () {
             var userId;
             return __generator(this, function (_a) {
+                // Jos ei kirjautunut sisään
+                if (!context.user)
+                    throw new apollo_server_errors_1.AuthenticationError('Access denied');
+                // Vain admin voi antaa userId-argumentin
                 if (args.userId && context.user.rooli !== 'admin')
                     throw new apollo_server_errors_1.AuthenticationError('Access denied');
                 if (!args.alias)

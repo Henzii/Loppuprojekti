@@ -17,7 +17,7 @@ const client = new ApolloClient({
   link: authLink.concat(createUploadLink({
     uri: (process.env.NODE_ENV === 'development')
       ? 'http://localhost:8080/graphql'
-      : 'https://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com/graphql',
+      : process.env.SERVER_ADDR || '/graphql',
   })),
 
 });

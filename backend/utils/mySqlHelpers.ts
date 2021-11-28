@@ -6,7 +6,7 @@ export const makeConnection = () => {
         user: process.env.DB_USER,
         password: process.env.DB_PASS,
         database: 'main',
-        connectTimeout: 5000
+        connectTimeout: 120
     });
 }
 

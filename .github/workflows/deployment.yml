@@ -19,6 +19,16 @@ jobs:
       run: npm run build-backend
     - name: Build frontend
       run: npm run build-frontend
-    - name: List files
-      run: ls
+    - name: Generate zip package
+      run: zip -r paketti.zip . -x '*.git*'
+    - name: Deploy package to AWS
+      uses: einaregilsson/beanstalk-deploy@v18
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: Risbeegomfkerho
+        environment_name: Risbeegomfkerho-env
+        version_label: 12345
+        region: us-east-2
+        deployment_package: paketti.zip 
 

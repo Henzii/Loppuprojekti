@@ -26,7 +26,6 @@ jobs:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: risbeegomfkerho
         heroku_email: henry.karlenius@edu.omnia.fi
-        rollbackonhealthcheckfailed: true
     - uses: actions/checkout@v2
     - name: Bump version and push tag
       if: ${{ github.event_name == 'push' }}

@@ -6,21 +6,18 @@ import { TextField } from '@mui/material';
 
 const FormikField = ({
   field, type, label, form, placeholder,
-}) => {
-  console.log(field);
-  return (
-    <TextField
-      name={field.name}
-      value={field.value}
-      onChange={field.onChange}
-      type={type}
-      label={label}
-      placeholder={placeholder}
-      error={(form.errors[field.name])}
-      helperText={(form.errors[field.name]) ? form.errors[field.name] : ''}
-    />
-  );
-};
+}) => (
+  <TextField
+    name={field.name}
+    value={field.value}
+    onChange={field.onChange}
+    type={type}
+    label={label}
+    placeholder={placeholder}
+    error={(form.errors[field.name])}
+    helperText={(form.errors[field.name]) ? form.errors[field.name] : ''}
+  />
+);
 
 FormikField.propTypes = {
   field: PropTypes.shape({

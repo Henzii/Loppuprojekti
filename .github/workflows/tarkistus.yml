@@ -1,0 +1,26 @@
+name: Koodin tsekkaus
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Asennus:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: npm asennus
+      run: npm install
+    - name: back- ja frontendin rakennus
+      run: npm run build
+    - name: linttaus
+      run: |
+        cd backend
+        npm run lint
+        cd ..
+        cd frontend
+        npm run lint
+    

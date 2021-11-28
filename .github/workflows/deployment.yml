@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
@@ -15,4 +15,8 @@ jobs:
         node-version: '12.x'
     - name: Install
       run: npm install
+    - name: Build backend
+      run: npm run build-backend
+    - name: Build frontend
+      run: npm run build-frontend
 

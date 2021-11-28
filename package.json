@@ -29,6 +29,7 @@
     "build-frontend" : "cd ./frontend && npm run build && mv build ../client",
     "build-frontend-win": "cd ./frontend && npm run build && move build ../client",
     "build": "npm run build-backend && npm run build-frontend",
+    "lint": "eslint . --ext .js,.jsx,.ts",
     "start" : "node ./server/index.js"
   },
   "dependencies": {

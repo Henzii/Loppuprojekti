@@ -17,10 +17,5 @@ jobs:
     - name: back- ja frontendin rakennus
       run: npm run build
     - name: linttaus
-      run: |
-        cd backend
-        npm run lint
-        cd ..
-        cd frontend
-        npm run lint
+      run: npm run lint
     

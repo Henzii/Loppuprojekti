@@ -1,14 +1,14 @@
 import { makeConnection } from "../utils/mySqlHelpers";
 
-const writeLog = (process: logProcess, type: logType, message: string): void => {
-    makeConnection().then(con => {
-        con.query('INSERT into logs (process, type, message) VALUES (?)', [[process, type, message]])
-            .catch(e => console.log('Virhe lokin kirjoittamisessa', e.message))
-    }).catch(e => console.log('Loki ei saa yhteyttä databaseen', e.message));
+const writeLog = async (process: logProcess, type: logType, message: string): Promise<void> => {
+    const con = await makeConnection();
+    await con.query('INSERT into logs (process, type, message) VALUES (?)', [[process, type, message]])
+    con.end();
 }
 export const readLogs = async (process: logProcess | ''): Promise<SingleLogEntry[] | []> => {
     const con = await makeConnection();
     const [rows] = await con.query(`SELECT * from logs ${(process !== '' ? 'where process = ?' : '')}`, process) as unknown[];
+    con.end();
     return rows as SingleLogEntry[];
 }
 

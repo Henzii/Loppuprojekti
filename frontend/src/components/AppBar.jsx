@@ -13,6 +13,9 @@ const AppBar = () => {
   return (
     <MuiAppBar position="sticky" sx={{ minHeight: { md: '100px' } }} style={{ justifyContent: 'center' }}>
       <Toolbar>
+        {/*
+          Pienellä näytöllä (kännykkä) näytetään menuikoni jonka alla navilinkit
+        */}
         <Box sx={{ display: { xs: 'inline', md: 'none' } }}>
           <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={(e) => setAnkkuri(e.currentTarget)}>
             <MenuIcon fontSize="large" />
@@ -28,6 +31,9 @@ const AppBar = () => {
         <Box style={{ flexGrow: 1 }}>
           <Typography variant="h3" component="span">Risbeegomfkerho</Typography>
         </Box>
+        {/*
+          Iso näyttö -> navilinkit navibaarissa, ei menuikonia
+        */}
         <Box sx={{ display: { xs: 'none', md: 'inline' } }}>
           <NaviLinkit />
         </Box>

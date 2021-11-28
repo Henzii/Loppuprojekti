@@ -32,6 +32,7 @@ const getSimpleCourseStats = async (id: number) => {
         GROUP BY course, playerName
     `;
     const [result] = await con.query(queryString, [id]);
+    con.end();
     return result;
 }
 const getCompetitions = async () => {
@@ -67,6 +68,7 @@ const getCompetitions = async () => {
     ) AND playerName IN (SELECT alias from alias)
     `;
     const [result] = await con.query(queryString);
+    con.end();
     return result;
 }
 export default { getSimpleCourseStats, getCompetitions };

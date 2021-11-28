@@ -15,7 +15,6 @@ const Admin = () => {
     e.preventDefault();
     haeUser({ variables: { name: e.target.tunnus.value } });
   };
-  console.log(data);
   return (
     <div className="wideContainer">
       <Typography variant="h1">Admin</Typography>

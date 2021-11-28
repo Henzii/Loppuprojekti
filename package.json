@@ -28,6 +28,7 @@
     "build-backend" : "cd ./backend && npm run DEVbuild",
     "build-frontend" : "cd ./frontend && npm run build && mv build ../client",
     "build-frontend-win": "cd ./frontend && npm run build && move build ../client",
+    "build": "npm run build-backend && npm run build-frontend",
     "start" : "node ./server/index.js"
   },
   "dependencies": {

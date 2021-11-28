@@ -38,7 +38,7 @@ export const queries = {
         getLogs: async (_root: unknown, args: { process: logProcess }, context: { user: DecodedToken }) => {
             let prosessi: logProcess | '';
             if (!context.user) throw new AuthenticationError('Access denied');
-            if (context.user.rooli !== 'admin')  {
+            if (context.user.rooli !== 'admin') {
                 prosessi = 'CsvParser';
             } else prosessi = '';
             const res = await readLogs(prosessi);
@@ -60,7 +60,7 @@ export const queries = {
             const res = await statsService.getCompetitions() as Array<RawCompetitionData>;
             if (!context.user?.id) {
                 return res.map((r, i) => {
-                    return { ...r, playerName: names[Math.floor(Math.random() * names.length)] }
+                    return { ...r, playerName: '******' }
                 });
             }
             return res;

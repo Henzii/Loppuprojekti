@@ -12,13 +12,13 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '14.x'
     - name: Install
       run: npm install
     - name: Build backend
       run: npm run build-backend
     - name: Build frontend
-      run: npm run build-frontend
+      run: echo npm run build-frontend
     - name: Listaa
       run: ls -l
     - name: Deploy to heroku

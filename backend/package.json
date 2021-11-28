@@ -8,6 +8,7 @@
     "start": "node ./server-build/index.js",
     "ts-node": "ts-node",
     "dev": "ts-node-dev index.ts",
+    "lint": "eslint . --ext .js,.ts",
     "tsc": "tsc",
     "DEVbuild": "tsc --outDir ../server/"
   },

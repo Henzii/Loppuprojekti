@@ -1,0 +1,39 @@
+name: Deploy to Heroku
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  Build and deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Install
+      run: npm install
+    - name: Build backend
+      run: npm run build-backend
+    - name: Build frontend
+      run: npm run build-frontend
+    - name: Generate zip package
+      run: zip -r paketti.zip . -x '*.git*'
+      name: Deploy to heroku
+        if: ${{ github.event_name == 'push' }}
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: Risbeegomfkerho
+          heroku_email: henry.karlenius@edu.omnia.fi
+          rollbackonhealthcheckfailed: true
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' }}
+        uses: anothrNick/github-tag-action@1.33.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+

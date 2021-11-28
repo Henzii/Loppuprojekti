@@ -35,7 +35,7 @@ const server = new ApolloServer({
 server.start().then(() => {
     const portti = process.env.PORT || 8080;
     app.use(cors({
-        origin: 'http://risbeegomfkerho-env.eba-bw33rqyj.us-east-2.elasticbeanstalk.com',
+        origin: process.env.origin,
     }));
     app.use(express.static(path.join(__dirname, '../client/')));
     app.get('*', function (req, res) {

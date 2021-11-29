@@ -4,7 +4,7 @@ import Typed from 'react-typed';
 
 import { useLoggedIn } from '../../components/LoggedUserProvider';
 import CreateAccount from '../../components/CreateAccount';
-import LoginForm from '../../components/LoginForm';
+import LoginFormContainer from '../../components/LoginForm';
 import LoggedFrontPage from './LoggedFrontPage';
 
 const Frontpage = () => {
@@ -53,7 +53,7 @@ const Frontpage = () => {
           <Typography paragraph>
             Syötä tunnuksesi ja salasanasi alla oleviin kenttiin kirjautuaksesi sisään.
           </Typography>
-          <LoginForm />
+          <LoginFormContainer />
         </div>
       </div>
       <div className="wideContainer" id="luoTunnus">

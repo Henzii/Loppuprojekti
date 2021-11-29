@@ -79,7 +79,7 @@ const SimpleCourseStats = ({ data }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Collapse in={showMore} mountOnEnter={false}>
+        <Collapse in={showMore} mountOnEnter>
           <Typography variant="h5">10 viimeisintä kierrosta</Typography>
           {data.tenLatestRounds.map((r, i) => {
             const key = `${data.rata}${data.layout}${i}`;

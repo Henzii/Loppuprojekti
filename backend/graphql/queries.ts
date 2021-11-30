@@ -21,7 +21,8 @@ export const queries = {
             const res = await userService.getAllUsers(args.active);
             return res;
         },
-        getUser: async (_root: unknown, args: Pick<User, "name" | "id">) => {
+        getUser: async (_root: unknown, args: Pick<User, "name" | "id">, context: ContextUserToken ) => {
+            if (context.user?.rooli !== 'admin') throw new AuthenticationError('Access denied');
             const res = await userService.getUser(
                 (args.id) ? args.id : args.name
             );

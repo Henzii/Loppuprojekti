@@ -14,7 +14,7 @@ const FormikField = ({
     type={type}
     label={label}
     placeholder={placeholder}
-    error={(form.errors[field.name])}
+    error={(form.errors[field.name] !== undefined)}
     helperText={(form.errors[field.name]) ? form.errors[field.name] : ''}
   />
 );

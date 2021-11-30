@@ -59,8 +59,10 @@ export const queries = {
         },
         getCompetitions: async (_root: unknown, _args: unknown, context: ContextUserToken) => {
             const res = await statsService.getCompetitions() as Array<RawCompetitionData>;
+            
+            // Jos ei kirjautunut sisään, muutetaan pelaajien nimet tähdiksi
             if (!context.user?.id) {
-                return res.map((r, i) => {
+                return res.map((r) => {
                     return { ...r, playerName: '******' }
                 });
             }
@@ -68,22 +70,3 @@ export const queries = {
         }
     },
 };
-
-const names = [
-    'Uolevi',
-    'Torsti',
-    'Vemmel',
-    'Velmeri',
-    'Jonne',
-    'Pasi-Pekka',
-    'Jani-Petteri',
-    'Irmeli',
-    'Taisto',
-    'Leif',
-    'Jorma69',
-    'Usuknoob',
-    'Jallu',
-    'Pena',
-    'Mica',
-    'Jerry',
-];

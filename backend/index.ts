@@ -35,16 +35,16 @@ const server = new ApolloServer({
 server.start().then(() => {
     const portti = process.env.PORT || 8080;
     app.use(cors({
-        origin: process.env.origin,
+        origin: process.env.ORIGIN,
     }));
-    app.use(express.static(path.join(__dirname, '../client/')));
+    app.use(express.static(path.join(__dirname, '../build/')));
     app.get('*', function (req, res) {
         if (!req.path.startsWith('/graphql'))
-            res.sendFile(path.resolve(__dirname, '../client/index.html'));
+            res.sendFile(path.resolve(__dirname, '../build/index.html'));
     });
     server.applyMiddleware({ app, cors: false });
     app.listen({ port: portti }, () => {
-        console.log(`Serveri pyörii portissa ${portti}...`);
+        console.log(`Serveri pyörii portissa ${portti}\nDatabase: ${process.env.DB_HOST}`);
     });
 }).catch((error) => {
     console.log('Yhteyttä ei voida muodostaa!', error);

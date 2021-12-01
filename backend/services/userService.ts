@@ -26,11 +26,16 @@ const getAllUsers = async (active: boolean | undefined = undefined): Promise<Use
 
 const getUser = async (param: number | string): Promise<User | null> => {
     const con = await makeConnection();
+    if (!con) {
+        console.log('Yhteys epäonnistui', con);
+        throw new Error('Ei yhteyttä tietokantaan');
+    }
     try {
         const [rows] = await con.query(`SELECT * from user WHERE ${(typeof param === 'string') ? 'name' : 'id'} = ?`, param) as mysql.RowDataPacket[];
         if (rows.length === 0) return null;
         return rows[0] as User;
     } catch (e) {
+        console.log('getUser fail!', e);
         throw new UserInputError(`SQL virhe'`)
     } finally {
         con.end();

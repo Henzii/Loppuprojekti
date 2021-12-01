@@ -1,0 +1,28 @@
+name: Deploy to AWS
+on:
+  workflow_run:
+    workflows: ["Koodin tsekkaus"]
+    branches: [main]
+    types:
+    - completed
+
+jobs:
+  Build_and_deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: postipaketti
+    - name: Deploy package to AWS
+      uses: einaregilsson/beanstalk-deploy@v18
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: Risbeegomfkerho
+        environment_name: Risbeegomfkerho-env
+        version_label: ${{ github.SHA }}
+        region: us-east-2
+        deployment_package: paketti.zip 
+

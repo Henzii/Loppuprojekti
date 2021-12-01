@@ -2,3 +2,5 @@ Suunnitteludokumentti
 Toteutusdokumentti
 node_modules
 .env
+server-build
+build

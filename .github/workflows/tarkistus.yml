@@ -23,10 +23,18 @@ jobs:
       run: npm run lint
     - name: frontend test
       run: npm run test:frontend
+    - name: paketoi asennus
+      run: zip -r paketti.zip . -x '*.git*'
+    - name: upload paketti
+      uses: actions/upload-artifact@v2
+      with:
+        name: postipaketti
+        path: paketti.zip
     - name: Tagi julkaisuun
       if: ${{ github.event_name == 'push'}}
       uses: anothrNick/github-tag-action@1.33.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEFAULT_BUMP: patch
+        RELEASE_BRANCHES: main
     

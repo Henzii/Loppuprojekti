@@ -45,6 +45,7 @@ server.start().then(() => {
     server.applyMiddleware({ app, cors: false });
     app.listen({ port: portti }, () => {
         console.log(`Serveri pyörii portissa ${portti}\nDatabase: ${process.env.DB_HOST}`);
+        console.log(`GraphqlPath: ${server.graphqlPath}`);
     });
 }).catch((error) => {
     console.log('Yhteyttä ei voida muodostaa!', error);

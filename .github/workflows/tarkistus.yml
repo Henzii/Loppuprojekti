@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v2
       with:
-        node-version: '12.x'
+        node-version: '14'
     - name: npm asennus
       run: npm install
     - name: back- ja frontendin rakennus
@@ -23,13 +23,12 @@ jobs:
       run: npm run lint
     - name: frontend test
       run: npm run test:frontend
-    - name: paketoi asennus
-      run: zip -r paketti.zip . -x '*.git*'
-    - name: upload paketti
-      uses: actions/upload-artifact@v2
+    - name: e2e testi
+      uses: cypress-io/github-action@v2
       with:
-        name: postipaketti
-        path: paketti.zip
+        command: npm run test:e2e
+        start: npm run start
+        wait-on: http://localhost:8080
     - name: Tagi julkaisuun
       if: ${{ github.event_name == 'push'}}
       uses: anothrNick/github-tag-action@1.33.0

@@ -25,7 +25,8 @@
     "typescript": "^4.5.2"
   },
   "scripts": {
-    "dev": "ts-node-dev ./backend/index.ts",
+    "dev": "ts-node-dev --project ./backend/tsconfig.json ./backend/index.ts",
+
     "dev:react": "react-scripts start",
     
     "build:backend": "tsc -p ./backend/tsconfig.json",
@@ -34,6 +35,7 @@
     
     "lint": "eslint --ext .ts,.js.,.tsx,.jsx",
     "test:frontend": "react-scripts test",
+    "test:e2e": "cypress run",
     "cypress:open": "cypress open",
 
     "start": "node ./server-build/index.js"

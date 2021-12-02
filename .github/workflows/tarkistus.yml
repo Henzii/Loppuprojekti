@@ -24,11 +24,11 @@ jobs:
     - name: frontend test
       run: npm run test:frontend
     - name: e2e testi
-        uses: cypress-io/github-action@v2
-        with:
-          command: npm run test:e2e
-          start: npm run start
-          wait-on: http://localhost:80
+      uses: cypress-io/github-action@v2
+      with:
+        command: npm run test:e2e
+        start: npm run start
+        wait-on: http://localhost:80
     - name: Tagi julkaisuun
       if: ${{ github.event_name == 'push'}}
       uses: anothrNick/github-tag-action@1.33.0

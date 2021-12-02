@@ -1,8 +1,5 @@
 name: Koodin tsekkaus
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches: [main]
     types: [opened, synchronize]
@@ -29,11 +26,5 @@ jobs:
         start: npm run start
         wait-on: http://localhost:8080
         wait-on-timeout: 60
-    - name: Tagi julkaisuun
-      if: ${{ github.event_name == 'push'}}
-      uses: anothrNick/github-tag-action@1.33.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DEFAULT_BUMP: patch
-        RELEASE_BRANCHES: main
+   
     

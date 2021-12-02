@@ -6,7 +6,7 @@ describe('Etusivu ', function() {
       cy.contains('Kirjaudu sisään')
       cy.contains('Stats').should('not.exist')
     })
-    it('Sisäänkirjautuminen onnistuu', function () {
+    it('Sisäänkirjautuminen epäonnistuu väärällä passulla', function () {
         cy.get('input[name="tunnus"]').first().type('Tester')
         cy.get('input[name="password"]').first().type("'ölfkewölfe")
         cy.get('button').contains('Kirjaudu').click()

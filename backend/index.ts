@@ -33,7 +33,7 @@ const server = new ApolloServer({
 })
 
 server.start().then(() => {
-    const portti = process.env.PORT || 8080;
+    const portti = process.env.PORT || 80;
     app.use(cors({
         origin: process.env.ORIGIN,
     }));

@@ -1,6 +1,6 @@
 describe('Sisäänkirjautuminen', function() {
     it('Sisäänkirjautuminen onnistuu', function () {
-        cy.visit('http://localhost')
+        cy.visit('http://localhost:8080')
         cy.get('input[name="tunnus"]').first().type(Cypress.env('CYPRESS_TEST_USER'))
         cy.get('input[name="password"]').first().type(Cypress.env('CYPRESS_TEST_PASSWORD'))
         cy.get('button').contains('Kirjaudu').click()

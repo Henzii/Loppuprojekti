@@ -1,6 +1,6 @@
 describe('Etusivu ', function() {
     it('Etusivu aukeaa', function() {
-      cy.visit('http://localhost')
+      cy.visit('http://localhost:8080')
       cy.contains('Risbeegomfkerho')
       // Ei kirjautunut sisään
       cy.contains('Kirjaudu sisään')

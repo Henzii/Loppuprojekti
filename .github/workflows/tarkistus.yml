@@ -28,7 +28,7 @@ jobs:
       with:
         command: npm run test:e2e
         start: npm run start
-        wait-on: http://localhost:80
+        wait-on: http://localhost:8080
     - name: Tagi julkaisuun
       if: ${{ github.event_name == 'push'}}
       uses: anothrNick/github-tag-action@1.33.0

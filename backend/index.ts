@@ -8,10 +8,12 @@ import resolvers from './graphql/resolvers';
 import jwt from 'jsonwebtoken';
 import { DecodedToken } from './types';
 import { graphqlUploadExpress } from 'graphql-upload';
+import { checkEnvVars } from './utils/checkEnvVars';
 
 const app = express();
 
 dotenv.config();
+checkEnvVars(); // Tarkastaa onko ympäristömuuttujat määritelty
 
 app.use(graphqlUploadExpress());
 
@@ -44,7 +46,7 @@ server.start().then(() => {
     });
     server.applyMiddleware({ app, cors: false });
     app.listen({ port: portti }, () => {
-        console.log(`Serveri pyörii portissa ${portti}\nDatabase: ${process.env.DB_HOST}`);
+        console.log(`\x1b[32mServeri pyörii portissa \x1b[1m${portti}\x1b[0m 👍`);
         console.log(`GraphqlPath: ${server.graphqlPath}`);
     });
 }).catch((error) => {

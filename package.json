@@ -35,7 +35,7 @@
     
     "lint": "eslint --ext .ts,.js.,.tsx,.jsx",
     "test:frontend": "react-scripts test",
-    "test:e2e": "cypress run --spec ./cypress/integration/front_page_loads.js",
+    "test:e2e": "cypress run",
     "cypress:open": "cypress open",
 
     "start": "node ./server-build/index.js"

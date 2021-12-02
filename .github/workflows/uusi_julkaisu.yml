@@ -1,0 +1,18 @@
+name: Uusi julkaisu
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Tagi_Julkaisuun:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Tagi julkaisuun
+        uses: anothrNick/github-tag-action@1.33.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: main

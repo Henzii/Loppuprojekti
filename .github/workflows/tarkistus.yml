@@ -1,8 +1,5 @@
 name: Koodin tsekkaus
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches: [main]
     types: [opened, synchronize]
@@ -26,14 +23,8 @@ jobs:
     - name: e2e testi
       uses: cypress-io/github-action@v2
       with:
-        command: npm run test:e2e
         start: npm run start
         wait-on: http://localhost:8080
-    - name: Tagi julkaisuun
-      if: ${{ github.event_name == 'push'}}
-      uses: anothrNick/github-tag-action@1.33.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DEFAULT_BUMP: patch
-        RELEASE_BRANCHES: main
+        wait-on-timeout: 60
+   
     

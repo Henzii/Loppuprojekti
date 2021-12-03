@@ -96,7 +96,11 @@ const deleteAlias = async (aliasId: number, userId: number | undefined) => {
 const updateUser = async (passwordHash: string | undefined, email: string | undefined, userId: number, rooli: string | undefined) => {
     if (!passwordHash && !email && !rooli) throw new Error('Antaisit edes yhden parametrin');
     const con = await makeConnection();
-    const vars: any = [];
+    const vars: { 
+        passwordHash?: string,
+        email?: string,
+        rooli?: string,
+    } = {};
 
     // Lisätään annetut parametrit vars-muuttujaan
     if (passwordHash) vars['passwordHash'] = passwordHash;
@@ -109,7 +113,6 @@ const updateUser = async (passwordHash: string | undefined, email: string | unde
         ${Object.keys(vars).map(k => k + ' = ?').join(', ')}
         WHERE id = ?
     `;
-    console.log('Updating user: ', query, 'arvot: ', vars);
     const [res] = await con.query(query, [...Object.values(vars), userId]) as mysql.ResultSetHeader[];
     con.end();
     return res.changedRows;

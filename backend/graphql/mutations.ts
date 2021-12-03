@@ -88,7 +88,7 @@ export const mutations = {
         uploadCsvFile: async (_paret: unknown, args: any, context: { user: DecodedToken }) => {
             if (!context.user?.id) throw new AuthenticationError('Access denied');
             return args.file.then((file: any) => {
-                const { createReadStream, filename, mimetype } = file
+                const { createReadStream } = file // createReadStream, filename, mimetype
                 const fileStream = createReadStream();
                 fileStream.pipe(fs.createWriteStream(`./upload/${context.user.name}.csv`));
                 finished(fileStream, () => {

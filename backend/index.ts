@@ -8,13 +8,15 @@ import resolvers from './graphql/resolvers';
 import jwt from 'jsonwebtoken';
 import { DecodedToken } from './types';
 import { graphqlUploadExpress } from 'graphql-upload';
-import { checkEnvVars } from './utils/checkEnvVars';
+import { checkStuff } from './utils/checkStuff';
 
 const app = express();
 
 dotenv.config();
 console.clear();
-checkEnvVars(); // Tarkastaa onko ympäristömuuttujat määritelty
+console.log(`____ _ ____ ___  ____ ____ ____ ____ _  _ ____ _  _ ____ ____ _  _ ____ 
+|__/ | [__  |__] |___ |___ | __ |  | |\\/| |___ |_/  |___ |__/ |__| |  | 
+|  \\ | ___] |__] |___ |___ |__] |__| |  | |    | \\_ |___ |  \\ |  | |__|`)
 
 app.use(graphqlUploadExpress());
 
@@ -35,7 +37,10 @@ const server = new ApolloServer({
     }
 })
 
-server.start().then(() => {
+server.start().then(async () => {
+
+    await checkStuff(); // Tarkastaa onko ympäristömuuttujat määritelty ja toimiiko tietokantayhteys
+    
     const portti = process.env.PORT || 8080;
     app.use(cors({
         origin: process.env.ORIGIN,
@@ -48,7 +53,6 @@ server.start().then(() => {
     server.applyMiddleware({ app, cors: false });
     app.listen({ port: portti }, () => {
         console.log(`\x1b[32mServeri pyörii portissa \x1b[1m${portti}\x1b[0m 👍`);
-        console.log(`GraphqlPath: ${server.graphqlPath}`);
     });
 }).catch((error) => {
     console.log('Yhteyttä ei voida muodostaa!', error);

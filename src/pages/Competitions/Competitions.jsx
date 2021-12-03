@@ -24,7 +24,6 @@ const Competitions = () => {
       </Container>
     );
   }
-  // useGetCompetitions palauttaa stringin jos error. Itse stinrg = error.message
   if (competitions[0].type === 'error') {
     return (
       <Container>

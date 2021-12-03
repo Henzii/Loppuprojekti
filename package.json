@@ -27,16 +27,13 @@
   "scripts": {
     "dev": "ts-node-dev --project ./backend/tsconfig.json ./backend/index.ts",
     "dev:react": "react-scripts start",
-    
     "build:backend": "tsc -p ./backend/tsconfig.json",
     "build:frontend": "react-scripts build",
     "build": "npm run build:backend && npm run build:frontend",
-    
     "lint": "eslint . --ext .ts,.js,.tsx,.jsx",
     "test:frontend": "react-scripts test",
     "test:e2e": "cypress run",
     "cypress:open": "cypress open",
-
     "start": "node ./server-build/index.js"
   },
   "dependencies": {

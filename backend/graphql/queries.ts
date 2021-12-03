@@ -59,7 +59,6 @@ export const queries = {
         },
         getCompetitions: async (_root: unknown, _args: unknown, context: ContextUserToken) => {
             const res = await statsService.getCompetitions() as Array<RawCompetitionData>;
-            
             // Jos ei kirjautunut sisään, muutetaan pelaajien nimet tähdiksi
             if (!context.user?.id) {
                 return res.map((r) => {

@@ -12,7 +12,7 @@ const useSetup = () => {
     if (setupQuery && !setupQuery.loading) {
       setSetup(setupQuery.data.getSetup);
     }
-  }, [setupQuery]);
+  }, [setupQuery.data]);
   const saveSetup = () => saveSetupMutation({ variables: setup });
 
   return { setup, setSetup, saveSetup };

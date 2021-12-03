@@ -11,7 +11,8 @@ const AdminSettings = () => {
 
   const handleChange = (e) => {
     let { value } = e.target;
-    if (typeof setup[e.target.name] === 'number') value = +value;
+    // Jos ennestään on numero -> parsitaan numeroksi tai nollaksi
+    if (!Number.isNaN(setup[e.target.name])) value = parseInt(value, 10) || 0;
     setSetup({ ...setup, [e.target.name]: value });
   };
   const handleSave = () => {

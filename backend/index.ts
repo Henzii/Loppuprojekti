@@ -13,6 +13,7 @@ import { checkEnvVars } from './utils/checkEnvVars';
 const app = express();
 
 dotenv.config();
+console.clear();
 checkEnvVars(); // Tarkastaa onko ympäristömuuttujat määritelty
 
 app.use(graphqlUploadExpress());

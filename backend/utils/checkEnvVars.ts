@@ -13,7 +13,7 @@ export const checkEnvVars = () => {
     }, '')
     if (tuloste !== '') {
 
-        console.log('\n🔥\x1b[41m\x1b[37mKaikkia ympäristömuuttujia ei ole määritelty!\x1b[0m🔥\n')
+        console.log('\n🔥\x1b[41m\x1b[33mKaikkia ympäristömuuttujia ei ole määritelty!\x1b[0m🔥\n')
         console.log(`\n${tuloste}`);
         console.log(`😥`)
     }

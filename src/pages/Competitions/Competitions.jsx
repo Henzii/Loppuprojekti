@@ -17,9 +17,24 @@ const Competitions = () => {
   }
   if (competitions.length < 1) {
     return (
-      <Typography paragraph>
-        Ei yhtään kilpailua? Erotkaa ryhmästä välittömästi!
-      </Typography>
+      <Container>
+        <Typography paragraph>
+          Ei yhtään kilpailua? Erotkaa ryhmästä välittömästi!
+        </Typography>
+      </Container>
+    );
+  }
+  // useGetCompetitions palauttaa stringin jos error. Itse stinrg = error.message
+  if (competitions[0].type === 'error') {
+    return (
+      <Container>
+        <Typography variant="h3">Virhe</Typography>
+        <Typography paragraph>
+          Virhe heattaessa kilpailuja! (
+          {competitions[0].error.message}
+          )
+        </Typography>
+      </Container>
     );
   }
   return (

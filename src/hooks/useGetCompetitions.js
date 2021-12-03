@@ -33,7 +33,8 @@ const useGetCompetitions = () => {
   const compQuery = useQuery(GET_COMPETITIONS);
   const [competitions, setCompetitions] = useState(null);
   useEffect(() => {
-    if (compQuery && !compQuery.loading) {
+    if (compQuery.error) setCompetitions([{ type: 'error', error: compQuery.error }]);
+    else if (compQuery && !compQuery.loading) {
       let data = compQuery.data.getCompetitions;
       data = groupCompetitionsData(data);
       data = data.map((c) => calculateRanks(c));

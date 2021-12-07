@@ -7,17 +7,19 @@ body {
   background-color: black;
   color: lightgray;
 }
-body::before {
-  content: "";
-  background: no-repeat center url('./assets/risbee.jpg');
-  background-size: cover;
-  opacity: 0.2;
+.tausta {
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  opacity: 0.15;
+  position: absolute;
   top: 0;
   left: 0;
-  bottom: 0;
-  right: 0;
+}
+.tausta .media {
+  min-width: 100%;
+  min-height: 100%;
   position: fixed;
-  z-index: -1;   
 }
 .warningFrame {
   border: 15px solid red;

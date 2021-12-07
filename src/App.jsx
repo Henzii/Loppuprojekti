@@ -12,10 +12,12 @@ import UploadCsv from './components/UploadCsv';
 import Settings from './pages/Settings/Settings';
 import Competitions from './pages/Competitions/Competitions';
 import Admin from './pages/Admin';
+import BackgroundMedia from './components/BackgroundMedia';
 
 function App() {
   return (
     <LoggedUserProvider>
+      <BackgroundMedia />
       <AppBar />
       <Routes>
         <Route path="/" element={<Frontpage />} />

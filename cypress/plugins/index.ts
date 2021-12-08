@@ -16,7 +16,32 @@
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
+require('dotenv').config();
+const mysql = require('mysql2/promise');
+const makeConnection = () => {
+
+  return mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: 'dev',
+  })
+}
 module.exports = (on, config) => {
+  on('task', {
+    'db:deleteUsers': async () => {
+      const con = await makeConnection();
+      const res = await con.query('delete from user where id > 0');
+      con.end();
+      return res;
+    },
+    'db:activateUsers': async () => {
+      const con = await makeConnection();
+      const res = await con.query('update user set active = 1 where id > 0')
+      con.end();
+      return res;
+    }
+  })
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 }

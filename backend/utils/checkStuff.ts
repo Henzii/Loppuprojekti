@@ -17,15 +17,21 @@ export const checkStuff = async () => {
         console.log('\n🔥\x1b[41m\x1b[33mKaikkia ympäristömuuttujia ei ole määritelty!\x1b[0m🔥')
         console.log(`\n${tuloste}`);
     }
-    else console.log('\nYmpäristömuuttujat\t\t✔️');
+    console.log(`\nenv: ${(process.env.NODE_ENV === 'production')
+        ? '\x1b[32mproduction'
+        : '\x1b[33m' + ((!process.env.NODE_ENV) ? 'undefined (default = dev)' : process.env.NODE_ENV)
+        }`);
+
+    console.log('\n\x1b[0mYmpäristömuuttujat\t\t✔️');
+
 
     try {
         const con = await makeConnection();
-        console.log('Tietokantayhteys\t\t✔️')
+        console.log('\x1b[0mTietokantayhteys\t\t✔️')
         con.end();
     } catch (e: unknown) {
         console.log('\x1b[31mTietokantavirhe!\t\t😥');
-        if ((e as { code: string}).code ) console.log(' – Virhe: ', (e as { code: string}).code)
+        if ((e as { code: string }).code) console.log(' – Virhe: ', (e as { code: string }).code)
     }
 
     console.log('\x1b[0m'); // Resetoi värin

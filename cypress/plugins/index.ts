@@ -19,11 +19,13 @@
 require('dotenv').config();
 const mysql = require('mysql2/promise');
 const makeConnection = () => {
-
+  const host = process.env.DB_HOST;
+  const user = process.env.DB_USER;
+  const password = process.env.DB_PASS;
   return mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
+    host,
+    user,
+    password,
     database: 'dev',
   })
 }

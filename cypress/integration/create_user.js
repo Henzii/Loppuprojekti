@@ -1,8 +1,8 @@
 const { visit } = require("graphql")
 
 describe('Etusivu ', function () {
-    before(async () => {
-        await cy.task('db:deleteUsers')
+    before(() => {
+        cy.task('db:deleteUsers')
     })
     it('Etusivu aukeaa', function () {
         cy.visit('http://localhost:8080/')
@@ -21,8 +21,8 @@ describe('Etusivu ', function () {
         cy.get('button').contains('Kirjaudu').click()
         cy.contains('ei ole aktivoitu');
     })
-    it('Aktivoidaan käyttäjä -> kirjautuminen onnistuu', async function () {
-        await cy.task('db:activateUsers');
+    it('Aktivoidaan käyttäjä -> kirjautuminen onnistuu', function () {
+        cy.task('db:activateUsers');
         cy.get('input[name="tunnus"]').first().type('Cypress');
         cy.get('input[name="password"]').first().type("RandomPassword");
         cy.get('button').contains('Kirjaudu').click();

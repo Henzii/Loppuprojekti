@@ -29,7 +29,7 @@ jobs:
       with:
         start: npm run start
         install: false
-        spec: cypress/integration/*
+        spec: cypress/integration/front_page_loads.js
         wait-on: http://localhost:8080
         wait-on-timeout: 60
         

@@ -22,13 +22,18 @@ const makeConnection = () => {
   const host = process.env.DB_HOST;
   const user = process.env.DB_USER;
   const password = process.env.DB_PASS;
-  console.log('dbHost: ', process.env.DB_HOST);
-  return mysql.createConnection({
-    host,
-    user,
-    password,
-    database: 'dev',
-  })
+  let connection;
+  try {
+    connection = mysql.createConnection({
+      host,
+      user,
+      password,
+      database: 'dev',
+    })
+  } catch (e) {
+    throw new Error('Virhe yhdistettäessä tietokantaan');
+  }
+  return connection;
 }
 module.exports = (on, config) => {
   on('task', {

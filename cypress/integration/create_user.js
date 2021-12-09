@@ -1,7 +1,6 @@
 describe('Tunnuksen luonti', function () {
     before(() => {
         cy.task('db:deleteUsers')
-        cy.log('...!!!!!!');
     })
     it('Etusivu aukeaa', function () {
         cy.visit('http://localhost:8080/')

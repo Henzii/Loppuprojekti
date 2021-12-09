@@ -35,6 +35,7 @@
     "test:frontend": "react-scripts test",
     "test:e2e": "cypress run",
     "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "start": "cross-env NODE_ENV=production node ./server-build/index.js"
   },
   "dependencies": {

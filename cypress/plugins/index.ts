@@ -22,6 +22,7 @@ const makeConnection = () => {
   const host = process.env.DB_HOST;
   const user = process.env.DB_USER;
   const password = process.env.DB_PASS;
+  console.log('dbHost: ', process.env.DB_HOST);
   return mysql.createConnection({
     host,
     user,

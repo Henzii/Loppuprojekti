@@ -1,4 +1,4 @@
-describe('Etusivu ', function () {
+describe('Etusivun testi', function () {
   it('Etusivu aukeaa', function () {
     cy.visit('http://localhost:8080/')
     cy.contains('Risbeegomfkerho')

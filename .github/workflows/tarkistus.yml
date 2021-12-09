@@ -28,6 +28,8 @@ jobs:
           DB_PASS: ${{ secrets.DB_PASS }}
       with:
         start: npm run start
+        install: false
+        spec: cypress/integration/*
         wait-on: http://localhost:8080
         wait-on-timeout: 60
         

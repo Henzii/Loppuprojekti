@@ -18,8 +18,6 @@ console.log(`____ _ ____ ___  ____ ____ ____ ____ _  _ ____ _  _ ____ ____ _  _ 
 |__/ | [__  |__] |___ |___ | __ |  | |\\/| |___ |_/  |___ |__/ |__| |  | 
 |  \\ | ___] |__] |___ |___ |__] |__| |  | |    | \\_ |___ |  \\ |  | |__|`)
 
-app.use(graphqlUploadExpress());
-
 const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -41,6 +39,8 @@ server.start().then(async () => {
 
     await checkStuff(); // Tarkastaa onko ympäristömuuttujat määritelty ja toimiiko tietokantayhteys
     
+    app.use(graphqlUploadExpress());
+
     const portti = process.env.PORT || 8080;
     app.use(cors({
         origin: process.env.ORIGIN,

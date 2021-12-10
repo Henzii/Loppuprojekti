@@ -22,9 +22,16 @@ jobs:
       run: npm run test:frontend
     - name: e2e testi
       uses: cypress-io/github-action@v2
+      env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
       with:
         start: npm run start
+        install: false
+        spec: cypress/integration/front_page_loads.js
         wait-on: http://localhost:8080
         wait-on-timeout: 60
+        
    
     

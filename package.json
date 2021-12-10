@@ -36,7 +36,7 @@
     "test:e2e": "cypress run",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "start": "cross-env NODE_ENV=production node ./server-build/index.js"
+    "start": "node ./server-build/index.js"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",

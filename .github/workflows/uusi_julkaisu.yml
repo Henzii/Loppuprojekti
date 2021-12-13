@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize]
 
 jobs:
   tagaa_ja_tyonna:
@@ -26,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           RELEASE_BRANCHES: main
-      - name: Telegrammia epäonnistumisesta
+      - name: Telegrammia failuresta
         if: {{ failure() }}
         uses: appleboy/telegram-action@master
         with:

@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  Tagi_Julkaisuun:
+  tagaa_ja_tyonna:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,3 +26,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           RELEASE_BRANCHES: main
+      - name: Telegrammia epäonnistumisesta
+        if: {{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO_ME }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+              !! Herokuun työntö epäonnistui !!

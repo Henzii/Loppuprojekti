@@ -1,4 +1,4 @@
-name: Terveystarkistus
+name: Terveystarkastus
 
 on:
   schedule:

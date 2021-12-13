@@ -19,7 +19,7 @@ export const checkStuff = async () => {
     }
     console.log(`\nenv: ${(process.env.NODE_ENV === 'production')
         ? '\x1b[32mproduction'
-        : '\x1b[33m' + ((!process.env.NODE_ENV) ? 'undefined (default = dev)' : process.env.NODE_ENV)
+        : '\x1b[33m' + process.env.NODE_ENV
         }`);
 
     console.log('\n\x1b[0mYmpäristömuuttujat\t\t✔️');

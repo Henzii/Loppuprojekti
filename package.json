@@ -35,8 +35,9 @@
     "test:frontend": "react-scripts test",
     "test:e2e": "cypress run",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "start": "node ./server-build/index.js"
+
+    "start": "NODE_ENV=production node ./server-build/index.js",
+    "start:win": "set NODE_ENV=production&&node ./server-build/index.js"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",

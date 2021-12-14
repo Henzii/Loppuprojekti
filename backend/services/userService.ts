@@ -20,7 +20,7 @@ const getAllUsers = async (active: boolean | undefined = undefined): Promise<Use
     } catch (e) {
         throw new Error(e as string);
     } finally {
-        con.end();
+        await con.end();
     }
 }
 

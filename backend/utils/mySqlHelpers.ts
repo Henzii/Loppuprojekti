@@ -12,7 +12,7 @@ export const makeConnection = () => {
             password: process.env.DB_PASS,
             database,
         });
-        return yhteys;
+        return yhteys as Promise<mysql.Connection>;
     } catch (e) {
         throw Error(e as string);
     }

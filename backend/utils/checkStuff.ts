@@ -28,7 +28,7 @@ export const checkStuff = async () => {
     try {
         const con = await makeConnection();
         console.log('\x1b[0mTietokantayhteys\t\t✔️')
-        con.end();
+        con.destroy();
     } catch (e: unknown) {
         console.log('\x1b[31mTietokantavirhe!\t\t😥');
         if ((e as { code: string }).code) console.log(' – Virhe: ', (e as { code: string }).code)

@@ -21,7 +21,7 @@ console.log(`____ _ ____ ___  ____ ____ ____ ____ _  _ ____ _  _ ____ ____ _  _ 
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }: { req: reqWithUser }) => {
+    context: ({ req }: { req: { headers: { authorization: string }}} ) => {
         if (req.headers.authorization) {
             const token = req.headers.authorization;
             try {
@@ -37,8 +37,9 @@ const server = new ApolloServer({
 
 server.start().then(async () => {
 
+    if (process.env.NODE_ENV === 'test') return;
+
     await checkStuff(); // Tarkastaa onko ympäristömuuttujat määritelty ja toimiiko tietokantayhteys
-    
     app.use(graphqlUploadExpress());
 
     const portti = process.env.PORT || 8080;
@@ -58,10 +59,12 @@ server.start().then(async () => {
     console.log('Yhteyttä ei voida muodostaa!', error);
 });
 
-export interface reqWithUser extends express.Request {
+export interface reqWithUser {
     user: {
         id: number,
         name: string,
         rooli: string,
     }
 }
+
+export default server;

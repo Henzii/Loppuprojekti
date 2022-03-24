@@ -18,7 +18,7 @@ const PointsList = ({ competitions }) => {
       });
       return ret;
     }, []);
-    setPistetaulu(taulu);
+    setPistetaulu(taulu.sort((a, b) => taulu[b] - taulu[a]));
   }, []);
   return (
     <Table>
@@ -30,7 +30,6 @@ const PointsList = ({ competitions }) => {
       </TableHead>
       <TableBody>
         {Object.keys(pisteTaulu)
-          .sort((a, b) => pisteTaulu[b] - pisteTaulu[a])
           .map((key) => (
             <TableRow>
               <TableCell>{key}</TableCell>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 import Typed from 'react-typed';
+import { useLocation } from 'react-router-dom';
 
 import { useLoggedIn } from '../../components/LoggedUserProvider';
 import CreateAccount from '../../components/CreateAccount';
@@ -9,6 +10,8 @@ import LoggedFrontPage from './LoggedFrontPage';
 
 const Frontpage = () => {
   const loggedIn = useLoggedIn();
+  const loc = useLocation();
+  const testMode = loc.pathname === '/test';
   if (loggedIn.me) {
     return (
       <LoggedFrontPage />
@@ -31,6 +34,18 @@ const Frontpage = () => {
             onComplete={(ref) => { ref.cursor.remove(); }}
           />
         </Typography>
+        {testMode
+          && (
+            <Typography paragraph>
+              Voit testata sovellusta käyttämällä testitunnuksia
+              <br />
+              Tunnus:&nbsp;
+              <b>test</b>
+              <br />
+              Salasana:&nbsp;
+              <b>password</b>
+            </Typography>
+          )}
         <Typography paragraph>
           Olet eksynyt Risbeegomfkerhon sivuille.
         </Typography>
@@ -57,7 +72,7 @@ const Frontpage = () => {
         </div>
       </div>
       <div className="wideContainer" id="luoTunnus">
-        <Typography variant="h3">Luo tunnuket</Typography>
+        <Typography variant="h3">Luo tunnukset</Typography>
         <Typography paragraph>
           Luo tunnukset täyttämällä alla oleva lomake. Sähköpostiosoite ei ole pakollinen.
         </Typography>

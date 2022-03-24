@@ -26,8 +26,8 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/logs" element={<ReadLogs />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/" element={<Frontpage />} />
         <Route path="/:param" element={<Frontpage />} />
-
       </Routes>
       <Particles
         options={{

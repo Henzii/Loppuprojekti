@@ -42,7 +42,7 @@ const Competitions = () => {
       <Button onClick={() => setShowPoints((open) => !open)}>
         {(showPoints) ? 'Piilota pisteet' : 'Näytä pisteet'}
       </Button>
-      <Collapse in={showPoints}>
+      <Collapse in={showPoints} mountOnEnter>
         <PointList competitions={competitions} />
       </Collapse>
       {competitions.map((c) => <SingleCompetition competition={c} key={c.gameId} />)}

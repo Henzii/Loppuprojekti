@@ -17,16 +17,17 @@ import BackgroundMedia from './components/BackgroundMedia';
 function App() {
   return (
     <LoggedUserProvider>
-      <BackgroundMedia />
       <AppBar />
+      <BackgroundMedia />
       <Routes>
-        <Route path="/" element={<Frontpage />} />
         <Route path="/competitions" element={<Competitions />} />
         <Route path="/stats" element={<Stats />} />
         <Route path="/upload" element={<UploadCsv />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/logs" element={<ReadLogs />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/" element={<Frontpage />} />
+        <Route path="/:param" element={<Frontpage />} />
       </Routes>
       <Particles
         options={{
